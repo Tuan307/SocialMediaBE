@@ -19,7 +19,7 @@ public class UserService {
     private UserRepository repository;
 
     public ResponseResult getUserProfile(String id) {
-        Optional<User> user = repository.findById(id);
+        Optional<User> user = repository.findUserByUserId(id);
         if (user.isPresent()) {
             return new ResponseResult(new Status(200, "Successfully"), user);
         } else {
@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public ResponseResult registerUser(User user) {
-        Optional<User> checkExistence = repository.findUserByEmail(user.getEmail());
+        Optional<User> checkExistence = repository.findUserByUserId(user.getUserId());
         if (checkExistence.isPresent()) {
             return new ResponseResult(new Status(200, "User has been already registered"), null);
         } else {

@@ -11,8 +11,8 @@ public class DatingImage {
     private Long id;
     private String imageLink;
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @JsonIgnore
-    @JoinColumn(name = "dating_profile_id")
+    @MapsId
+    @JoinColumn(name = "profile_id")
     private DatingUser datingUser;
 
     public DatingImage() {

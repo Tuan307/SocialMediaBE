@@ -1,17 +1,15 @@
 package com.social.app.model.feature_dating;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "dating_user")
 public class DatingUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(name = "profile_id")
     private String profileId;
     private String name;
@@ -21,11 +19,10 @@ public class DatingUser {
     private Integer age;
     private Double latitude;
     private Double longitude;
-    @OneToMany(mappedBy = "datingUser", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<DatingImage> imagesList;
 
-    public DatingUser(Long id, String profileId, String name, LocalDate dateOfBirth, String bio,  Double latitude, Double longitude, List<DatingImage> imagesList) {
-        this.id = id;
+    public DatingUser(String profileId, String name, LocalDate dateOfBirth, String bio, Double latitude, Double longitude, List<DatingImage> imagesList) {
         this.profileId = profileId;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -38,15 +35,8 @@ public class DatingUser {
     public DatingUser() {
     }
 
-    public DatingUser(String id) {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public DatingUser(String profileId) {
+        this.profileId = profileId;
     }
 
     public String getName() {
@@ -116,8 +106,7 @@ public class DatingUser {
     @Override
     public String toString() {
         return "DatingUser{" +
-                "id='" + id + '\'' +
-                ", profileId='" + profileId + '\'' +
+                "profileId='" + profileId + '\'' +
                 ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", bio='" + bio + '\'' +

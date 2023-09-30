@@ -1,15 +1,15 @@
 package com.social.app.model.feature_authentication;
 
-import com.social.app.model.feature_post_image.PostImageItem;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "user_id")
+    private String userId;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "full_name")
@@ -20,29 +20,55 @@ public class User {
     private String bio;
     @Column(name = "email")
     private String email;
+    @Column(name = "latitude")
+    private Double latitude;
+    @Column(name = "longitude")
+    private Double longitude;
 
-    public User(String id, String userName, String fullName, String imageUrl, String bio, String email) {
-        this.id = id;
+    public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude) {
+        this.userId = userId;
         this.userName = userName;
         this.fullName = fullName;
         this.imageUrl = imageUrl;
         this.bio = bio;
         this.email = email;
-    }
-
-    public User(String id) {
-        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public User() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public String getUserName() {
@@ -88,12 +114,15 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", bio='" + bio + '\'' +
                 ", email='" + email + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

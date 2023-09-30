@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
-    @Query("SELECT u FROM User u WHERE u.email = ?1")
-    Optional<User> findUserByEmail(String email);
+    @Query("SELECT u FROM User u WHERE u.userId = ?1")
+    Optional<User> findUserByUserId(String userId);
 
     Optional<List<User>> findByUserNameContaining(String keyword, PageRequest pageRequest);
 }
