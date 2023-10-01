@@ -1,13 +1,14 @@
 package com.social.app.model.feature_authentication;
 
+import com.social.app.model.feature_post_image.PostItem;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(name = "user_id")
     private String userId;
     @Column(name = "user_name")
@@ -25,7 +26,10 @@ public class User {
     @Column(name = "longitude")
     private Double longitude;
 
-    public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude) {
+    @OneToMany(mappedBy = "postUserId", cascade = CascadeType.ALL)
+    private List<PostItem> postItemList;
+
+    public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude, List<PostItem> postItemList) {
         this.userId = userId;
         this.userName = userName;
         this.fullName = fullName;
@@ -34,18 +38,24 @@ public class User {
         this.email = email;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.postItemList = postItemList;
+    }
+
+    public User(String userId) {
+        this.userId = userId;
+    }
+
+    public List<PostItem> getPostItemList() {
+        return postItemList;
+    }
+
+    public void setPostItemList(List<PostItem> postItemList) {
+        this.postItemList = postItemList;
     }
 
     public User() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUserId() {
         return userId;
@@ -114,7 +124,6 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", fullName='" + fullName + '\'' +

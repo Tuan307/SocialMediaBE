@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<PostItem, String> {
-    @Query(value = "SELECT p FROM PostItem p WHERE p.userId = ?1")
+    @Query(value = "SELECT p FROM PostItem p WHERE p.postUserId.userId = ?1")
     Optional<List<PostItem>> findPostByUserId(String userId, PageRequest pageRequest);
 }

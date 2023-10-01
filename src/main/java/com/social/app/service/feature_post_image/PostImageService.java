@@ -2,6 +2,7 @@ package com.social.app.service.feature_post_image;
 
 import com.social.app.model.ResponseResult;
 import com.social.app.model.Status;
+import com.social.app.model.feature_authentication.User;
 import com.social.app.model.feature_post_image.PostImages;
 import com.social.app.model.feature_post_image.PostItem;
 import com.social.app.model.feature_post_image.PostRequest;
@@ -25,8 +26,8 @@ public class PostImageService {
     private PostRepository postRepository;
 
     public ResponseResult saveData(PostRequest postRequest) {
-        PostItem item = new PostItem(postRequest.getId(), postRequest.getDescription(), new ArrayList<PostImages>(), postRequest.getUserId(), postRequest.getCheckInTimestamp(), postRequest.getCheckInAddress(), postRequest.getCheckInLatitude(), postRequest.getCheckInLongitude(), postRequest.getType(), postRequest.getVideoUrl());
-        if(postRequest.getType().equals("image")){
+        PostItem item = new PostItem(postRequest.getId(), postRequest.getDescription(), new ArrayList<PostImages>(), new User(postRequest.getUserId()), postRequest.getCheckInTimestamp(), postRequest.getCheckInAddress(), postRequest.getCheckInLatitude(), postRequest.getCheckInLongitude(), postRequest.getType(), postRequest.getVideoUrl());
+        if (postRequest.getType().equals("image")) {
             for (int i = 0; i < postRequest.getImagesList().size(); i++) {
                 PostImages post = new PostImages(null, postRequest.getImagesList().get(i), new PostItem(postRequest.getId()));
                 item.getImagesList().add(post);

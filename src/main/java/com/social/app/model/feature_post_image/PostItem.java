@@ -1,6 +1,9 @@
 package com.social.app.model.feature_post_image;
 
+import com.social.app.model.feature_authentication.User;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -8,11 +11,14 @@ import java.util.List;
 @Table(name = "post_image")
 public class PostItem {
     @Id
-    private String id;
+    @Column(name = "post_id")
+    private String postId;
     private String description;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostImages> imagesList;
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "post_user_id", nullable = false)
+    private User postUserId;
     @Column(name = "check_in_timestamp")
     private String checkInTimestamp;
     @Column(name = "check_in_address")
@@ -26,11 +32,12 @@ public class PostItem {
     @Column(name = "video_url")
     private String videoUrl;
 
-    public PostItem(String id, String description, List<PostImages> imagesList, String userId, String checkInTimestamp, String checkInAddress, Double checkInLatitude, Double checkInLongitude, String type, String videoUrl) {
-        this.id = id;
+
+    public PostItem(String postId, String description, List<PostImages> imagesList, User postUserId, String checkInTimestamp, String checkInAddress, Double checkInLatitude, Double checkInLongitude, String type, String videoUrl) {
+        this.postId = postId;
         this.description = description;
         this.imagesList = imagesList;
-        this.userId = userId;
+        this.postUserId = postUserId;
         this.checkInTimestamp = checkInTimestamp;
         this.checkInAddress = checkInAddress;
         this.checkInLatitude = checkInLatitude;
@@ -42,12 +49,16 @@ public class PostItem {
     public PostItem() {
     }
 
-    public PostItem(String id) {
-        this.id = id;
+    public PostItem(String postId) {
+        this.postId = postId;
     }
 
-    public String getId() {
-        return id;
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 
     public String getCheckInTimestamp() {
@@ -82,10 +93,6 @@ public class PostItem {
         this.checkInLongitude = checkInLongitude;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -100,14 +107,6 @@ public class PostItem {
 
     public void setImagesList(List<PostImages> imagesList) {
         this.imagesList = imagesList;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getType() {
@@ -126,13 +125,20 @@ public class PostItem {
         this.videoUrl = videoUrl;
     }
 
+    public User getPostUserId() {
+        return postUserId;
+    }
+
+    public void setPostUserId(User userId) {
+        this.postUserId = userId;
+    }
+
     @Override
     public String toString() {
         return "PostItem{" +
-                "id='" + id + '\'' +
+                "id='" + postId + '\'' +
                 ", description='" + description + '\'' +
                 ", imagesList=" + imagesList +
-                ", userId='" + userId + '\'' +
                 ", checkInTimestamp='" + checkInTimestamp + '\'' +
                 ", checkInAddress='" + checkInAddress + '\'' +
                 ", checkInLatitude=" + checkInLatitude +

@@ -16,7 +16,7 @@ public class PostImages {
     private String imageUrl;
     @ManyToOne(fetch=FetchType.EAGER, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JsonIgnore
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "image_post_id")
     private PostItem post;
 
     public PostImages(Long id, String imageUrl, PostItem post) {
