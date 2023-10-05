@@ -1,4 +1,4 @@
-package com.social.app.model;
+package com.social.app.model.common;
 
 public class ResponseResult {
     private Status status;

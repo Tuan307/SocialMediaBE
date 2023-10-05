@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
-public interface DatingUserRepository extends JpaRepository<DatingUser, Long> {
-
-    @Query("SELECT u FROM DatingUser u WHERE u.profileId = ?1")
-    Optional<DatingUser> findUserByProfileId(String profileId);
-}
+//@Repository
+//public interface DatingUserRepository extends JpaRepository<DatingUser, Long> {
+//
+//    @Query("SELECT u FROM DatingUser u WHERE u.profileId = ?1")
+//    Optional<DatingUser> findUserByProfileId(String profileId);
+//}

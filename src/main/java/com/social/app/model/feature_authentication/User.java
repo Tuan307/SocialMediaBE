@@ -1,10 +1,20 @@
 package com.social.app.model.feature_authentication;
 
+import com.social.app.model.feature_notification.NotificationModel;
 import com.social.app.model.feature_post_image.PostItem;
+import com.social.app.model.feature_post_image.SavedPostItem;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
@@ -27,7 +37,16 @@ public class User {
     private Double longitude;
 
     @OneToMany(mappedBy = "postUserId", cascade = CascadeType.ALL)
+    @Transient
     private List<PostItem> postItemList;
+
+    @OneToMany(mappedBy = "user_saved_id", cascade = CascadeType.ALL)
+    @Transient
+    private List<SavedPostItem> savedPostItems;
+
+    @OneToMany(mappedBy = "notificationUserId", cascade = CascadeType.ALL)
+    @Transient
+    private List<NotificationModel> notificationModelList;
 
     public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude, List<PostItem> postItemList) {
         this.userId = userId;
@@ -45,86 +64,10 @@ public class User {
         this.userId = userId;
     }
 
-    public List<PostItem> getPostItemList() {
-        return postItemList;
-    }
-
-    public void setPostItemList(List<PostItem> postItemList) {
-        this.postItemList = postItemList;
-    }
-
-    public User() {
-    }
-
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public String toString() {
         return "User{" +
-                ", userId='" + userId + '\'' +
+                "userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
@@ -132,6 +75,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", postItemList=" + postItemList +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
-package com.social.app.model;
+package com.social.app.model.common;
 
 import com.social.app.model.feature_authentication.User;
 

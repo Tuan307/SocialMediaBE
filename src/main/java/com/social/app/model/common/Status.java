@@ -1,4 +1,4 @@
-package com.social.app.model;
+package com.social.app.model.common;
 
 import lombok.Getter;
 import lombok.Setter;

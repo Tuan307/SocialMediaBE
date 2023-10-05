@@ -1,7 +1,7 @@
 package com.social.app.service.feature_authentication;
 
-import com.social.app.model.ResponseResult;
-import com.social.app.model.Status;
+import com.social.app.model.common.ResponseResult;
+import com.social.app.model.common.Status;
 import com.social.app.model.feature_authentication.User;
 import com.social.app.repository.feature_authentication.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

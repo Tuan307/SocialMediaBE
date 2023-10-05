@@ -1,7 +1,8 @@
 package com.social.app.controller.feature_post_image;
 
-import com.social.app.model.ResponseResult;
+import com.social.app.model.common.ResponseResult;
 import com.social.app.model.feature_post_image.PostRequest;
+import com.social.app.model.feature_post_image.SavedPostRequest;
 import com.social.app.service.feature_post_image.PostImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,11 @@ public class PostImageController {
     @PostMapping("")
     public ResponseResult savePostImage(@RequestBody PostRequest postRequest) {
         return postImageService.saveData(postRequest);
+    }
+
+    @PostMapping("/saved")
+    public ResponseResult saveSavedPost(@RequestBody SavedPostRequest postRequest) {
+        return postImageService.savedPost(postRequest);
     }
 
     @GetMapping("/detail")
@@ -35,6 +41,16 @@ public class PostImageController {
     @DeleteMapping("/delete")
     public ResponseResult deletePost(@RequestParam("postId") String postId) {
         return postImageService.deletePost(postId);
+    }
+
+    @PostMapping("/saved/exist")
+    public ResponseResult checkIfSavedPostExist(@RequestBody SavedPostRequest savedPostRequest) {
+        return postImageService.checkIfSavedPost(savedPostRequest);
+    }
+
+    @GetMapping("/saved")
+    public ResponseResult getAllSavedPostByUserId(@RequestParam("userId") String userId, @RequestParam("pageCount") int pageCount, @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber) {
+        return postImageService.getAlLSavedDataByUser(userId, pageCount, pageNumber - 1);
     }
 
 }

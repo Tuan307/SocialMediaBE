@@ -1,12 +1,16 @@
 package com.social.app.model.feature_post_image;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostRequest {
     private String id;
     private String description;
@@ -18,22 +22,6 @@ public class PostRequest {
     private Double checkInLongitude;
     private String type;
     private String videoUrl;
-
-    public PostRequest() {
-    }
-
-    public PostRequest(String id, String description, List<String> imagesList, String userId, String checkInTimestamp, String checkInAddress, Double checkInLatitude, Double checkInLongitude, String type, String videoUrl) {
-        this.id = id;
-        this.description = description;
-        this.imagesList = imagesList;
-        this.userId = userId;
-        this.checkInTimestamp = checkInTimestamp;
-        this.checkInAddress = checkInAddress;
-        this.checkInLatitude = checkInLatitude;
-        this.checkInLongitude = checkInLongitude;
-        this.type = type;
-        this.videoUrl = videoUrl;
-    }
 
     @Override
     public String toString() {
