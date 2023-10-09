@@ -32,7 +32,6 @@ public class NotificationService {
         if (user.isPresent()) {
             NotificationModel notificationModel = new NotificationModel();
             notificationModel.setIsPost(request.getIsPost());
-            notificationModel.setIsInvitation(request.getIsInvitation());
             notificationModel.setText(request.getText());
             notificationModel.setNotificationTimeStamp(request.getTimeStamp());
             notificationModel.setNotificationPostId(request.getPostId());

@@ -1,5 +1,10 @@
 package com.social.app.model.feature_authentication;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.social.app.model.feature_group.GroupInvitationModel;
+import com.social.app.model.feature_group.GroupMemberModel;
+import com.social.app.model.feature_group.GroupModel;
+import com.social.app.model.feature_group.GroupPostItem;
 import com.social.app.model.feature_notification.NotificationModel;
 import com.social.app.model.feature_post_image.PostItem;
 import com.social.app.model.feature_post_image.SavedPostItem;
@@ -37,16 +42,32 @@ public class User {
     private Double longitude;
 
     @OneToMany(mappedBy = "postUserId", cascade = CascadeType.ALL)
-    @Transient
+    @JsonIgnore
     private List<PostItem> postItemList;
 
+    @OneToMany(mappedBy = "groupPostUserId", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<GroupPostItem> groupPostItemList;
+
     @OneToMany(mappedBy = "user_saved_id", cascade = CascadeType.ALL)
-    @Transient
+    @JsonIgnore
     private List<SavedPostItem> savedPostItems;
 
     @OneToMany(mappedBy = "notificationUserId", cascade = CascadeType.ALL)
-    @Transient
+    @JsonIgnore
     private List<NotificationModel> notificationModelList;
+
+    @OneToMany(mappedBy = "groupOwner", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<GroupModel> groupModelOwner;
+
+    @OneToMany(mappedBy = "groupMemberUserId", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<GroupMemberModel> groupMemberModelList;
+
+    @OneToMany(mappedBy = "requestUserId", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<GroupInvitationModel> groupInvitationModelList;
 
     public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude, List<PostItem> postItemList) {
         this.userId = userId;

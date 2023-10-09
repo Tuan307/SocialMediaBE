@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class NotificationItemRequest {
     private Boolean isPost;
-    private Boolean isInvitation;
     private String text;
     private String ownerId;
     private String postId;
@@ -22,7 +21,6 @@ public class NotificationItemRequest {
     public String toString() {
         return "NotificationItemRequest{" +
                 "isPost=" + isPost +
-                ", isInvitation=" + isInvitation +
                 ", text='" + text + '\'' +
                 ", ownerId='" + ownerId + '\'' +
                 ", postId='" + postId + '\'' +
