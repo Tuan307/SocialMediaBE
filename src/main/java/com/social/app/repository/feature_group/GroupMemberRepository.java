@@ -15,9 +15,15 @@ public interface GroupMemberRepository extends JpaRepository<GroupMemberModel, L
     @Query(value = "SELECT g FROM GroupMemberModel g WHERE g.groupMemberUserId.userId = ?1")
     Optional<List<GroupMemberModel>> findGroupByUserId(String userId, PageRequest pageRequest);
 
+    @Query(value = "SELECT g FROM GroupMemberModel g WHERE g.groupMemberUserId.userId = ?1")
+    Optional<GroupMemberModel> findUserByUserId(String userId);
+
     @Query(value = "SELECT g FROM GroupMemberModel g WHERE g.groupMemberUserId.userId = ?1 AND g.groupModelId.id = ?2")
     Optional<GroupMemberModel> findGroupByUserIdAndGroupId(String userId, Long groupId);
 
     @Query(value = "SELECT g FROM GroupMemberModel g WHERE g.groupModelId.id = ?1")
     Optional<List<GroupMemberModel>> findMembersByGroupId(Long groupId);
+
+    @Query(value = "SELECT p FROM GroupMemberModel p WHERE p.groupModelId.id = ?1 AND p.groupMemberUserId.userName LIKE ?2%")
+    List<GroupMemberModel> searchMemberByName(Long groupId, String keyword);
 }

@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,6 +81,10 @@ public class GroupService {
         return new ResponseResult(new Status(200, "Successfully"), groupMemberRepository.findMembersByGroupId(id).get());
     }
 
+    public ResponseResult searchAllMembersOfGroup(Long id, String keyword) {
+        return new ResponseResult(new Status(200, "Successfully"), groupMemberRepository.searchMemberByName(id, keyword));
+    }
+
     public ResponseResult getAllGroupByUserId(String userId, int pageNumber, int pageCount) {
         return new ResponseResult(new Status(200, "Successfully"), groupMemberRepository.findGroupByUserId(userId, PageRequest.of(pageNumber, pageCount)));
     }
@@ -91,6 +96,16 @@ public class GroupService {
             return new ResponseResult(new Status(200, "Successfully"), null);
         } else {
             return new ResponseResult(new Status(200, "Đã có lỗi xảy ra, vui lòng thử lại sau"), null);
+        }
+    }
+
+    public ResponseResult removeUserFromGroup(String userId, Long groupId) {
+        Optional<GroupMemberModel> checkUserExistence = groupMemberRepository.findGroupByUserIdAndGroupId(userId, groupId);
+        if (checkUserExistence.isPresent()) {
+            groupMemberRepository.deleteById(checkUserExistence.get().getId());
+            return new ResponseResult(new Status(200, "Successfully"), null);
+        } else {
+            return new ResponseResult(new Status(200, "Tài khoản này không phải là thành viên của nhóm, vui lòng thử lại"), null);
         }
     }
 
@@ -165,5 +180,10 @@ public class GroupService {
     public ResponseResult getDetailPost(String postId, Long groupId) {
         Optional<GroupPostItem> post = groupPostItemRepository.findPostByGroupIdAndPostId(groupId, postId);
         return post.map(postItem -> new ResponseResult(new Status(200, "Successfully"), postItem)).orElseGet(() -> new ResponseResult(new Status(200, "Post does not exist"), null));
+    }
+
+    public ResponseResult searchPostWithDescriptionKeyword(Long groupId, String keyword) {
+        List<GroupPostItem> post = groupPostItemRepository.searchPostByDescription(groupId, keyword);
+        return new ResponseResult(new Status(200, "Successfully"), post);
     }
 }

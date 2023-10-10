@@ -50,14 +50,14 @@ public class GroupController {
         return groupService.addUserToGroup(request);
     }
 
-    @PostMapping("/add/post")
-    public ResponseResult addGroupPost(@RequestBody CreateGroupPostItem request) {
-        return groupService.saveGroupPost(request);
-    }
-
     @PostMapping("/delete/invitation")
     public ResponseResult cancelInvitation(@RequestBody AddGroupMemberRequest request) {
         return groupService.deleteInvitation(request);
+    }
+
+    @DeleteMapping("/remove/user")
+    public ResponseResult removeUserFromGroup(@RequestParam("userId") String userId, @RequestParam("groupId") Long groupId) {
+        return groupService.removeUserFromGroup(userId, groupId);
     }
 
     @GetMapping("/member")
@@ -65,9 +65,20 @@ public class GroupController {
         return groupService.getAllMembersOfGroup(groupId);
     }
 
+    @GetMapping("/search/member")
+    public ResponseResult getAllMembersOfGroup(@RequestParam("groupId") Long groupId, @RequestParam("keyword") String keyword) {
+        return groupService.searchAllMembersOfGroup(groupId, keyword);
+    }
+
+    //Post
+    @PostMapping("/add/post")
+    public ResponseResult addGroupPost(@RequestBody CreateGroupPostItem request) {
+        return groupService.saveGroupPost(request);
+    }
+
     @GetMapping("/post/detail")
-    public ResponseResult getDetailPost(@RequestParam("postId") String postId,@RequestParam(value = "groupId") Long id) {
-        return groupService.getDetailPost(postId,id);
+    public ResponseResult getDetailPost(@RequestParam("postId") String postId, @RequestParam(value = "groupId") Long id) {
+        return groupService.getDetailPost(postId, id);
     }
 
     @GetMapping("/newsfeed")
@@ -83,5 +94,10 @@ public class GroupController {
     @DeleteMapping("/delete")
     public ResponseResult deletePost(@RequestParam("postId") String postId, @RequestParam("groupId") Long groupId) {
         return groupService.deletePost(postId, groupId);
+    }
+
+    @GetMapping("/search/post")
+    public ResponseResult getAllPostsByDescription(@RequestParam(value = "groupId") Long id, @RequestParam(value = "keyword") String keyword) {
+        return groupService.searchPostWithDescriptionKeyword(id, keyword);
     }
 }
