@@ -81,6 +81,7 @@ public class GroupController {
         return groupService.getDetailPost(postId, id);
     }
 
+
     @GetMapping("/newsfeed")
     public ResponseResult getAllPosts(@RequestParam(value = "pageCount") int pageCount, @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber) {
         return groupService.getAllPosts(pageCount, pageNumber - 1);
