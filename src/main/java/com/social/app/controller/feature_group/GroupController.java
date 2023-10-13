@@ -20,14 +20,19 @@ public class GroupController {
         return groupService.createGroup(request);
     }
 
+    @GetMapping("/owner")
+    public ResponseResult getAllGroupByOwner(@RequestParam("userId") String userId, @RequestParam("pageCount") int pageCount, @RequestParam("pageNumber") int pageNumber) {
+        return groupService.getAllGroupByOwner(userId, pageCount, pageNumber - 1);
+    }
+
     @GetMapping("")
-    public ResponseResult getAllGroup() {
-        return groupService.getAllGroup();
+    public ResponseResult getGroupById(@RequestParam("groupId") Long groupId) {
+        return groupService.getGroupById(groupId);
     }
 
     @GetMapping("/user")
-    public ResponseResult getAllGroupByUserId(@RequestParam("userId") String userId) {
-        return groupService.getAllGroupByUserId(userId, 0, 20);
+    public ResponseResult getAllGroupByUserId(@RequestParam("userId") String userId, @RequestParam("pageCount") int pageCount, @RequestParam("pageNumber") int pageNumber) {
+        return groupService.getAllGroupByUserId(userId, pageNumber - 1, pageCount);
     }
 
     @GetMapping("/invitation")
@@ -63,6 +68,11 @@ public class GroupController {
     @GetMapping("/member")
     public ResponseResult getAllMembersOfGroup(@RequestParam("groupId") Long groupId) {
         return groupService.getAllMembersOfGroup(groupId);
+    }
+
+    @GetMapping("/group/check/join")
+    public ResponseResult checkIfJoined(@RequestParam("userId") String userId, @RequestParam("groupId") Long groupId) {
+        return groupService.checkIfJoinedGroup(userId, groupId);
     }
 
     @GetMapping("/search/member")

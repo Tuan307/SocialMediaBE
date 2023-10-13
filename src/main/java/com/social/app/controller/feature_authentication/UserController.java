@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseResult searchUsers(@RequestParam("name") String name, @RequestParam("pageCount") int pageCount, @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber) {
-        return userService.searchUser(name, pageCount, pageNumber - 1);
+    public ResponseResult searchUsers(@RequestParam("keyword") String name, @RequestParam("pageCount") int pageCount, @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber) {
+        return userService.searchUser(name, pageNumber - 1, pageCount);
     }
 }

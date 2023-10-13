@@ -69,8 +69,12 @@ public class GroupService {
         }
     }
 
-    public ResponseResult getAllGroup() {
-        return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findAll());
+    public ResponseResult getAllGroupByOwner(String userId, int pageCount, int pageNumber) {
+        return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findGroupByOwnerId(userId, PageRequest.of(pageNumber, pageCount)));
+    }
+
+    public ResponseResult getGroupById(Long groupId) {
+        return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findById(groupId).get());
     }
 
     public ResponseResult getAllGroupInvitation(String userId, String type) {
@@ -97,6 +101,11 @@ public class GroupService {
         } else {
             return new ResponseResult(new Status(200, "Đã có lỗi xảy ra, vui lòng thử lại sau"), null);
         }
+    }
+
+    public ResponseResult checkIfJoinedGroup(String userId, Long groupId) {
+        Optional<GroupMemberModel> checkUserExistence = groupMemberRepository.findGroupByUserIdAndGroupId(userId, groupId);
+        return checkUserExistence.map(groupMemberModel -> new ResponseResult(new Status(200, "Successfully"), groupMemberModel)).orElseGet(() -> new ResponseResult(new Status(200, "Tài khoản này không phải là thành viên của nhóm, vui lòng thử lại"), null));
     }
 
     public ResponseResult removeUserFromGroup(String userId, Long groupId) {

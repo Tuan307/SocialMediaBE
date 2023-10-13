@@ -42,8 +42,8 @@ public class UserService {
         return new ResponseResult(new Status(HttpStatus.OK.value(), "Successfully"), users, pageCount, pageNumber + 1);
     }
 
-    public ResponseResult searchUser(String keyword, int pageCount, int pageNumber) {
-        Optional<List<User>> list = repository.findByUserNameContaining(keyword, PageRequest.of(pageNumber, pageCount));
+    public ResponseResult searchUser(String keyword, int pageNumber, int pageCount) {
+        List<User> list = repository.searchUserByUserName(keyword, PageRequest.of(pageNumber, pageCount));
         return new ResponseResult(new Status(200, "Successfully"), list);
     }
 
