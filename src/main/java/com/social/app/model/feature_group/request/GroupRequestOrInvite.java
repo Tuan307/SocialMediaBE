@@ -14,4 +14,5 @@ public class GroupRequestOrInvite {
     private String type;
     private String userId;
     private Long groupId;
+    private String fromInvitedUserId;
 }

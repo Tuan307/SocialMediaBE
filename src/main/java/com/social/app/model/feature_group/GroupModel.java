@@ -32,17 +32,21 @@ public class GroupModel {
     @Column(name = "group_created_at")
     private String groupCreatedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_owner_id")
     private User groupOwner;
     @Column(name = "group_privacy")
     private String groupPrivacy;
 
-    @OneToMany(mappedBy = "groupModelId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "groupModelId", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<GroupMemberModel> groupMemberModels;
 
-    @OneToMany(mappedBy = "groupPostModelId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "groupPostModelId", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<GroupPostItem> groupPostItemList;
+
+    @OneToMany(mappedBy = "groupId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<GroupInvitationModel> groupInvitationModelList;
 }

@@ -1,6 +1,5 @@
 package com.social.app.model.feature_group;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.social.app.model.feature_authentication.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,6 +24,10 @@ public class GroupInvitationModel {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User requestUserId;
+
+    @ManyToOne
+    @JoinColumn(name = "from_user_id")
+    private User fromInvitedUserId;
     @ManyToOne
     @JoinColumn(name = "group_id")
     private GroupModel groupId;

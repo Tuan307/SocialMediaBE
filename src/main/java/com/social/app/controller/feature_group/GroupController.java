@@ -30,6 +30,11 @@ public class GroupController {
         return groupService.getGroupById(groupId);
     }
 
+    @DeleteMapping("/delete/group")
+    public ResponseResult deleteGroup(@RequestParam("groupId") Long groupId) {
+        return groupService.deleteGroup(groupId);
+    }
+
     @GetMapping("/user")
     public ResponseResult getAllGroupByUserId(@RequestParam("userId") String userId, @RequestParam("pageCount") int pageCount, @RequestParam("pageNumber") int pageNumber) {
         return groupService.getAllGroupByUserId(userId, pageNumber - 1, pageCount);
@@ -70,7 +75,7 @@ public class GroupController {
         return groupService.getAllMembersOfGroup(groupId);
     }
 
-    @GetMapping("/group/check/join")
+    @GetMapping("/check/join")
     public ResponseResult checkIfJoined(@RequestParam("userId") String userId, @RequestParam("groupId") Long groupId) {
         return groupService.checkIfJoinedGroup(userId, groupId);
     }
@@ -102,7 +107,7 @@ public class GroupController {
         return groupService.getAlLDataByGroup(id, pageCount, pageNumber - 1);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/group/post")
     public ResponseResult deletePost(@RequestParam("postId") String postId, @RequestParam("groupId") Long groupId) {
         return groupService.deletePost(postId, groupId);
     }

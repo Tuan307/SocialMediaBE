@@ -69,6 +69,10 @@ public class User {
     @JsonIgnore
     private List<GroupInvitationModel> groupInvitationModelList;
 
+    @OneToMany(mappedBy = "fromInvitedUserId", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<GroupInvitationModel> groupInvitationMadeModelList;
+
     public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude, List<PostItem> postItemList) {
         this.userId = userId;
         this.userName = userName;

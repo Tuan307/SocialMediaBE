@@ -12,8 +12,8 @@ import java.util.Optional;
 @Repository
 public interface GroupMemberRepository extends JpaRepository<GroupMemberModel, Long> {
 
-    @Query(value = "SELECT g FROM GroupMemberModel g WHERE g.groupMemberUserId.userId = ?1")
-    Optional<List<GroupMemberModel>> findGroupByUserId(String userId, PageRequest pageRequest);
+    @Query(value = "SELECT g FROM GroupMemberModel g WHERE g.groupMemberUserId.userId = ?1 AND g.type = ?2")
+    Optional<List<GroupMemberModel>> findGroupByUserId(String userId,String type, PageRequest pageRequest);
 
     @Query(value = "SELECT g FROM GroupMemberModel g WHERE g.groupMemberUserId.userId = ?1")
     Optional<GroupMemberModel> findUserByUserId(String userId);

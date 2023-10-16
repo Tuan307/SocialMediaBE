@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,12 +57,14 @@ public class GroupService {
 
     public ResponseResult inviteMemberToGroup(GroupRequestOrInvite requestOrInvite) {
         Optional<User> user = userRepository.findUserByUserId(requestOrInvite.getUserId());
+        Optional<User> fromUserInvited = userRepository.findUserByUserId(requestOrInvite.getFromInvitedUserId());
         Optional<GroupModel> groupModel = groupModelRepository.findById(requestOrInvite.getGroupId());
         if (groupModel.isPresent() && user.isPresent()) {
             GroupInvitationModel groupInvitationModel = new GroupInvitationModel();
             groupInvitationModel.setGroupId(groupModel.get());
             groupInvitationModel.setCreatedAt(requestOrInvite.getCreatedAt());
             groupInvitationModel.setType(requestOrInvite.getType());
+            groupInvitationModel.setFromInvitedUserId(fromUserInvited.get());
             groupInvitationModel.setRequestUserId(user.get());
             return new ResponseResult(new Status(200, "Successfully"), groupInvitationRepository.save(groupInvitationModel));
         } else {
@@ -90,7 +93,7 @@ public class GroupService {
     }
 
     public ResponseResult getAllGroupByUserId(String userId, int pageNumber, int pageCount) {
-        return new ResponseResult(new Status(200, "Successfully"), groupMemberRepository.findGroupByUserId(userId, PageRequest.of(pageNumber, pageCount)));
+        return new ResponseResult(new Status(200, "Successfully"), groupMemberRepository.findGroupByUserId(userId, "member", PageRequest.of(pageNumber, pageCount)));
     }
 
     public ResponseResult deleteInvitation(AddGroupMemberRequest request) {
@@ -180,6 +183,35 @@ public class GroupService {
         Optional<GroupPostItem> post = groupPostItemRepository.findPostByGroupIdAndPostId(groupId, postId);
         if (post.isPresent()) {
             groupPostItemRepository.deleteById(postId);
+            return new ResponseResult(new Status(200, "Successfully"), null);
+        } else {
+            return new ResponseResult(new Status(200, "Post does not exist"), null);
+        }
+    }
+
+    public ResponseResult deleteGroup(Long groupId) {
+        Optional<GroupModel> groupModel = groupModelRepository.findById(groupId);
+        if (groupModel.isPresent()) {
+            List<GroupMemberModel> posts = groupModel.get().getGroupMemberModels();
+            for (Iterator<GroupMemberModel> iterator = posts.iterator(); iterator.hasNext(); ) {
+                GroupMemberModel post = iterator.next();
+                post.setGroupMemberUserId(null);
+                iterator.remove(); //remove the child first
+            }
+            List<GroupPostItem> posts1 = groupModel.get().getGroupPostItemList();
+            for (Iterator<GroupPostItem> iterator = posts1.iterator(); iterator.hasNext(); ) {
+                GroupPostItem post = iterator.next();
+                post.setGroupPostModelId(null);
+                iterator.remove(); //remove the child first
+            }
+
+            List<GroupInvitationModel> posts2 = groupModel.get().getGroupInvitationModelList();
+            for (Iterator<GroupInvitationModel> iterator = posts2.iterator(); iterator.hasNext(); ) {
+                GroupInvitationModel post = iterator.next();
+                post.setGroupId(null);
+                iterator.remove(); //remove the child first
+            }
+            groupModelRepository.deleteById(groupModel.get().getId());
             return new ResponseResult(new Status(200, "Successfully"), null);
         } else {
             return new ResponseResult(new Status(200, "Post does not exist"), null);
