@@ -21,14 +21,14 @@ public class GroupPostItem {
     private String groupPostId;
     private String description;
 
-    @OneToMany(mappedBy = "groupPostItem", cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "groupPostItem", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GroupPostContentItem> groupPostContentItemList;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "group_post_user_id")
     private User groupPostUserId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "group_post_group_id")
     private GroupModel groupPostModelId;
 

@@ -182,6 +182,12 @@ public class GroupService {
     public ResponseResult deletePost(String postId, Long groupId) {
         Optional<GroupPostItem> post = groupPostItemRepository.findPostByGroupIdAndPostId(groupId, postId);
         if (post.isPresent()) {
+            List<GroupPostContentItem> posts = post.get().getGroupPostContentItemList();
+            for (Iterator<GroupPostContentItem> iterator = posts.iterator(); iterator.hasNext(); ) {
+                GroupPostContentItem post1 = iterator.next();
+                post1.setGroupPostItem(null);
+                iterator.remove(); //remove the child first
+            }
             groupPostItemRepository.deleteById(postId);
             return new ResponseResult(new Status(200, "Successfully"), null);
         } else {

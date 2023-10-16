@@ -19,7 +19,7 @@ public class GroupPostContentItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String imageUrl;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "group_post_id")
     private GroupPostItem groupPostItem;

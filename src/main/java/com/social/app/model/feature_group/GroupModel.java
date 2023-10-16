@@ -32,7 +32,7 @@ public class GroupModel {
     @Column(name = "group_created_at")
     private String groupCreatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "group_owner_id")
     private User groupOwner;
     @Column(name = "group_privacy")
