@@ -16,6 +16,9 @@ public class NotificationItemRequest {
     private String postId;
     private String timeStamp;
     private String userId;
+    private Boolean isInvitation;
+    private Boolean isRequest;
+    private Long groupId;
 
     @Override
     public String toString() {

@@ -30,6 +30,11 @@ public class GroupController {
         return groupService.getGroupById(groupId);
     }
 
+    @GetMapping("/all")
+    public ResponseResult getAllNotJoinedGroup(@RequestParam("userId") String userId, @RequestParam("pageCount") int pageCount, @RequestParam("pageNumber") int pageNumber) {
+        return groupService.getAllGroup(userId, pageCount, pageNumber - 1);
+    }
+
     @DeleteMapping("/delete/group")
     public ResponseResult deleteGroup(@RequestParam("groupId") Long groupId) {
         return groupService.deleteGroup(groupId);

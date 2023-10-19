@@ -21,6 +21,8 @@ public class GroupInvitationModel {
     private String createdAt;
     @Column(name = "type")
     private String type;
+    @Column(name = "message")
+    private String message;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User requestUserId;

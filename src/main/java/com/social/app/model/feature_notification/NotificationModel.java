@@ -1,6 +1,7 @@
 package com.social.app.model.feature_notification;
 
 import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_group.GroupModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,10 @@ public class NotificationModel {
     private Long id;
     @Column(name = "is_post")
     private Boolean isPost;
+    @Column(name = "is_invitation")
+    private Boolean isInvitation;
+    @Column(name = "is_request")
+    private Boolean isRequest;
     @Column(name = "text")
     private String text;
     @Column(name = "notification_post_id")
@@ -30,7 +35,9 @@ public class NotificationModel {
     @ManyToOne
     @JoinColumn(name = "notification_user_id")
     private User notificationUserId;
-
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private GroupModel notificationGroupId;
     @Override
     public String toString() {
         return "NotificationModel{" +

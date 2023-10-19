@@ -18,6 +18,6 @@ public interface GroupPostItemRepository extends JpaRepository<GroupPostItem, St
     @Query(value = "SELECT p FROM GroupPostItem p WHERE p.groupPostModelId.id = ?1 AND p.groupPostId = ?2")
     Optional<GroupPostItem> findPostByGroupIdAndPostId(Long groupId, String postId);
 
-    @Query(value = "SELECT p FROM GroupPostItem p WHERE p.groupPostModelId.id = ?1 AND p.description LIKE ?2%")
+    @Query(value = "SELECT p FROM GroupPostItem p WHERE p.groupPostModelId.id = ?1 AND (p.description LIKE ?2% OR p.groupPostUserId.userName LIKE ?2%)")
     List<GroupPostItem> searchPostByDescription(Long groupId, String keyword);
 }

@@ -2,6 +2,7 @@ package com.social.app.model.feature_group;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_notification.NotificationModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,4 +50,9 @@ public class GroupModel {
     @OneToMany(mappedBy = "groupId", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<GroupInvitationModel> groupInvitationModelList;
+
+    @OneToMany(mappedBy = "notificationGroupId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<NotificationModel> notificationModelList;
+
 }

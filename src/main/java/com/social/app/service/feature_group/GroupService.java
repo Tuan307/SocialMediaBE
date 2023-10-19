@@ -8,11 +8,13 @@ import com.social.app.model.feature_group.request.AddGroupMemberRequest;
 import com.social.app.model.feature_group.request.CreateGroupPostItem;
 import com.social.app.model.feature_group.request.CreateGroupRequest;
 import com.social.app.model.feature_group.request.GroupRequestOrInvite;
+import com.social.app.model.feature_notification.NotificationModel;
 import com.social.app.repository.feature_authentication.UserRepository;
 import com.social.app.repository.feature_group.GroupInvitationRepository;
 import com.social.app.repository.feature_group.GroupMemberRepository;
 import com.social.app.repository.feature_group.GroupModelRepository;
 import com.social.app.repository.feature_group.GroupPostItemRepository;
+import com.social.app.repository.feature_notification.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,9 +37,10 @@ public class GroupService {
     private GroupPostItemRepository groupPostItemRepository;
     @Autowired
     private GroupMemberRepository groupMemberRepository;
-
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     public ResponseResult createGroup(CreateGroupRequest createGroupRequest) {
         Optional<User> user = userRepository.findUserByUserId(createGroupRequest.getUserId());
@@ -62,10 +65,31 @@ public class GroupService {
         if (groupModel.isPresent() && user.isPresent()) {
             GroupInvitationModel groupInvitationModel = new GroupInvitationModel();
             groupInvitationModel.setGroupId(groupModel.get());
+            groupInvitationModel.setMessage(requestOrInvite.getMessage());
             groupInvitationModel.setCreatedAt(requestOrInvite.getCreatedAt());
             groupInvitationModel.setType(requestOrInvite.getType());
-            groupInvitationModel.setFromInvitedUserId(fromUserInvited.get());
+            if (requestOrInvite.getType().equals("invite")) {
+                groupInvitationModel.setFromInvitedUserId(fromUserInvited.get());
+            } else {
+                groupInvitationModel.setFromInvitedUserId(null);
+            }
             groupInvitationModel.setRequestUserId(user.get());
+            NotificationModel notificationModel = new NotificationModel();
+            notificationModel.setNotificationGroupId(groupModel.get());
+            notificationModel.setText(requestOrInvite.getMessage());
+            notificationModel.setNotificationTimeStamp(requestOrInvite.getCreatedAt());
+            if (requestOrInvite.getType().equals("invite")) {
+                notificationModel.setIsInvitation(true);
+            } else {
+                notificationModel.setIsRequest(true);
+            }
+            if (requestOrInvite.getType().equals("invite")) {
+                notificationModel.setNotificationUserId(fromUserInvited.get());
+            } else {
+                notificationModel.setNotificationUserId(null);
+            }
+            notificationModel.setNotificationOwnerId(requestOrInvite.getUserId());
+            notificationRepository.save(notificationModel);
             return new ResponseResult(new Status(200, "Successfully"), groupInvitationRepository.save(groupInvitationModel));
         } else {
             return new ResponseResult(new Status(200, "Đã có lỗi xảy ra"), null);
@@ -78,6 +102,20 @@ public class GroupService {
 
     public ResponseResult getGroupById(Long groupId) {
         return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findById(groupId).get());
+    }
+
+    public ResponseResult getAllGroup(String userId, int pageCount, int page) {
+        Page<GroupModel> getAllGroup = groupModelRepository.findAll(PageRequest.of(page, pageCount));
+        List<GroupModel> resultList = new ArrayList<>();
+        System.out.println(getAllGroup.getContent().size());
+        for (GroupModel i : getAllGroup.getContent()) {
+            Optional<GroupMemberModel> user = groupMemberRepository.findGroupByUserIdAndGroupId(userId, i.getId());
+            Optional<GroupInvitationModel> requestUser = groupInvitationRepository.findInvitationByUserIdAndGroupId(userId, i.getId());
+            if (user.isEmpty() && requestUser.isEmpty()) {
+                resultList.add(i);
+            }
+        }
+        return new ResponseResult(new Status(200, "Successfully"), resultList);
     }
 
     public ResponseResult getAllGroupInvitation(String userId, String type) {
@@ -220,7 +258,7 @@ public class GroupService {
             groupModelRepository.deleteById(groupModel.get().getId());
             return new ResponseResult(new Status(200, "Successfully"), null);
         } else {
-            return new ResponseResult(new Status(200, "Post does not exist"), null);
+            return new ResponseResult(new Status(300, "Group does not exist"), null);
         }
     }
 

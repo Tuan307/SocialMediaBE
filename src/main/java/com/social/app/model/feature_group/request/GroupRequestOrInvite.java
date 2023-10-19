@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class GroupRequestOrInvite {
     private String createdAt;
+    private String message;
     private String type;
     private String userId;
     private Long groupId;
