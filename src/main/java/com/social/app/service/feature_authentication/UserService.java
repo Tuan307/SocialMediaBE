@@ -2,6 +2,7 @@ package com.social.app.service.feature_authentication;
 
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
+import com.social.app.model.feature_authentication.UpdateUserRequest;
 import com.social.app.model.feature_authentication.User;
 import com.social.app.repository.feature_authentication.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,20 @@ public class UserService {
             return new ResponseResult(new Status(200, "Successfully"), user);
         } else {
             return new ResponseResult(new Status(200, "Can not find user"), null);
+        }
+    }
+
+    public ResponseResult updateUserProfile(UpdateUserRequest request) {
+        Optional<User> user = repository.findUserByUserId(request.getUserId());
+        if (user.isPresent()) {
+            User model = user.get();
+            model.setBio(request.getBio());
+            model.setUserName(request.getUserName());
+            model.setFullName(request.getFullName());
+            model.setImageUrl(request.getImageUrl());
+            return new ResponseResult(new Status(200, "Successfully"), repository.save(model));
+        } else {
+            return new ResponseResult(new Status(200, "Không tìm thấy thông tin của người dùng, vui lòng thử lại "), null);
         }
     }
 

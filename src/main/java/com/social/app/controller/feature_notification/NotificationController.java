@@ -17,6 +17,11 @@ public class NotificationController {
         return notificationService.addNotificationItem(notificationItemRequest);
     }
 
+    @DeleteMapping("/remove")
+    public ResponseResult removeNotification(@RequestParam("id") Long id) {
+        return notificationService.removeNotification(id);
+    }
+
     @GetMapping("")
     public ResponseResult getAllNotification(@RequestParam("ownerId") String ownerId, @RequestParam(value = "pageCount") int pageCount, @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber) {
         return notificationService.getAllNotificationItem(ownerId, pageCount, pageNumber - 1);

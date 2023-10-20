@@ -271,4 +271,5 @@ public class GroupService {
         List<GroupPostItem> post = groupPostItemRepository.searchPostByDescription(groupId, keyword);
         return new ResponseResult(new Status(200, "Successfully"), post);
     }
+
 }

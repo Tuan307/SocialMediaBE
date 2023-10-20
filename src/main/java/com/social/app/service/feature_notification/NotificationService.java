@@ -27,6 +27,17 @@ public class NotificationService {
         return new ResponseResult(new Status(200, "Successfully"), notificationRepository.findNotificationModelByOwnerId(ownerId, pageable));
     }
 
+    public ResponseResult removeNotification(Long id) {
+        Optional<NotificationModel> model = notificationRepository.findById(id);
+        if (model.isPresent()) {
+            notificationRepository.deleteById(id);
+            return new ResponseResult(new Status(200, "Successfully"), null);
+
+        } else {
+            return new ResponseResult(new Status(200, "Không tìm thấy thông báo, vui lòng thử lại"), null);
+        }
+    }
+
     public ResponseResult addNotificationItem(NotificationItemRequest request) {
         Optional<User> user = userRepository.findUserByUserId(request.getUserId());
         if (user.isPresent()) {

@@ -1,6 +1,7 @@
 package com.social.app.controller.feature_authentication;
 
 import com.social.app.model.common.ResponseResult;
+import com.social.app.model.feature_authentication.UpdateUserRequest;
 import com.social.app.model.feature_authentication.User;
 import com.social.app.service.feature_authentication.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseResult getUserProfile(@PathVariable("id") String id) {
         return userService.getUserProfile(id);
+    }
+
+    @PutMapping("/update/profile")
+    public ResponseResult updateProfile(@RequestBody UpdateUserRequest request) {
+        return userService.updateUserProfile(request);
     }
 
     @GetMapping("")

@@ -65,7 +65,7 @@ public class GroupController {
         return groupService.addUserToGroup(request);
     }
 
-    @PostMapping("/delete/invitation")
+    @DeleteMapping("/delete/invitation")
     public ResponseResult cancelInvitation(@RequestBody AddGroupMemberRequest request) {
         return groupService.deleteInvitation(request);
     }
