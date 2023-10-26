@@ -60,6 +60,11 @@ public class GroupController {
         return groupService.inviteMemberToGroup(request);
     }
 
+    @GetMapping("/get/request")
+    public ResponseResult getAllRequestInGroup(@RequestParam("groupId") Long groupId) {
+        return groupService.getAllRequestInGroup(groupId);
+    }
+
     @PostMapping("/add/member")
     public ResponseResult addMemberToGroup(@RequestBody AddGroupMemberRequest request) {
         return groupService.addUserToGroup(request);
@@ -83,6 +88,16 @@ public class GroupController {
     @GetMapping("/check/join")
     public ResponseResult checkIfJoined(@RequestParam("userId") String userId, @RequestParam("groupId") Long groupId) {
         return groupService.checkIfJoinedGroup(userId, groupId);
+    }
+
+    @GetMapping("check/request")
+    public ResponseResult checkIfRequestToJoinGroup(@RequestParam("userId") String userId, @RequestParam("groupId") Long groupId) {
+        return groupService.checkIfRequestToJoinGroup(userId, groupId);
+    }
+
+    @DeleteMapping("remove/request")
+    public ResponseResult removeGroupRequest(@RequestParam("userId") String userId, @RequestParam("groupId") Long groupId) {
+        return groupService.removeGroupRequest(userId, groupId);
     }
 
     @GetMapping("/search/member")

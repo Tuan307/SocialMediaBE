@@ -42,6 +42,30 @@ public class GroupService {
     @Autowired
     private NotificationRepository notificationRepository;
 
+    public ResponseResult checkIfRequestToJoinGroup(String userId, Long groupId) {
+        Optional<GroupMemberModel> checkIfJoined = groupMemberRepository.findGroupByUserIdAndGroupId(userId, groupId);
+        if (checkIfJoined.isPresent()) {
+            return new ResponseResult(new Status(200, "Successfully"), 2);
+        } else {
+            Optional<GroupInvitationModel> checkExist = groupInvitationRepository.findInvitationByFromUserIdAndGroupId(userId, groupId);
+            if (checkExist.isPresent()) {
+                return new ResponseResult(new Status(200, "Successfully"), 1);
+            } else {
+                return new ResponseResult(new Status(200, "Successfully"), 0);
+            }
+        }
+    }
+
+    public ResponseResult removeGroupRequest(String userId, Long groupId) {
+        Optional<GroupInvitationModel> checkExist = groupInvitationRepository.findInvitationByFromUserIdAndGroupId(userId, groupId);
+        if (checkExist.isPresent()) {
+            groupInvitationRepository.deleteById(checkExist.get().getId());
+            return new ResponseResult(new Status(200, "Successfully"), true);
+        } else {
+            return new ResponseResult(new Status(200, "Không tìm thấy yêu cầu"), false);
+        }
+    }
+
     public ResponseResult createGroup(CreateGroupRequest createGroupRequest) {
         Optional<User> user = userRepository.findUserByUserId(createGroupRequest.getUserId());
         if (user.isPresent()) {
@@ -68,13 +92,22 @@ public class GroupService {
             groupInvitationModel.setMessage(requestOrInvite.getMessage());
             groupInvitationModel.setCreatedAt(requestOrInvite.getCreatedAt());
             groupInvitationModel.setType(requestOrInvite.getType());
-            if (requestOrInvite.getType().equals("invite")) {
-                groupInvitationModel.setFromInvitedUserId(fromUserInvited.get());
-            } else {
-                groupInvitationModel.setFromInvitedUserId(null);
-            }
+            groupInvitationModel.setFromInvitedUserId(fromUserInvited.get());
             groupInvitationModel.setRequestUserId(user.get());
-            NotificationModel notificationModel = new NotificationModel();
+            //notification
+            boolean isRequest;
+            if (requestOrInvite.getType().equals("invite")) {
+                isRequest = true;
+            } else {
+                isRequest = false;
+            }
+            Optional<NotificationModel> model = notificationRepository.findNotificationModel(requestOrInvite.getUserId(), fromUserInvited.get().getUserId(), true);
+            NotificationModel notificationModel;
+            if (model.isEmpty()) {
+                notificationModel = new NotificationModel();
+            } else {
+                notificationModel = model.get();
+            }
             notificationModel.setNotificationGroupId(groupModel.get());
             notificationModel.setText(requestOrInvite.getMessage());
             notificationModel.setNotificationTimeStamp(requestOrInvite.getCreatedAt());
@@ -83,11 +116,7 @@ public class GroupService {
             } else {
                 notificationModel.setIsRequest(true);
             }
-            if (requestOrInvite.getType().equals("invite")) {
-                notificationModel.setNotificationUserId(fromUserInvited.get());
-            } else {
-                notificationModel.setNotificationUserId(null);
-            }
+            notificationModel.setNotificationUserId(fromUserInvited.get());
             notificationModel.setNotificationOwnerId(requestOrInvite.getUserId());
             notificationRepository.save(notificationModel);
             return new ResponseResult(new Status(200, "Successfully"), groupInvitationRepository.save(groupInvitationModel));
@@ -110,7 +139,7 @@ public class GroupService {
         System.out.println(getAllGroup.getContent().size());
         for (GroupModel i : getAllGroup.getContent()) {
             Optional<GroupMemberModel> user = groupMemberRepository.findGroupByUserIdAndGroupId(userId, i.getId());
-            Optional<GroupInvitationModel> requestUser = groupInvitationRepository.findInvitationByUserIdAndGroupId(userId, i.getId());
+            Optional<GroupInvitationModel> requestUser = groupInvitationRepository.findInvitationByFromUserIdAndGroupId(userId, i.getId());
             if (user.isEmpty() && requestUser.isEmpty()) {
                 resultList.add(i);
             }
@@ -272,4 +301,8 @@ public class GroupService {
         return new ResponseResult(new Status(200, "Successfully"), post);
     }
 
+    public ResponseResult getAllRequestInGroup(Long groupId) {
+        List<GroupInvitationModel> list = groupInvitationRepository.findInvitationByGroupId(groupId);
+        return new ResponseResult(new Status(200, "Successfully"), list);
+    }
 }

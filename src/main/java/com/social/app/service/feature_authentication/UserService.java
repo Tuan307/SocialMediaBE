@@ -35,7 +35,9 @@ public class UserService {
             model.setBio(request.getBio());
             model.setUserName(request.getUserName());
             model.setFullName(request.getFullName());
-            model.setImageUrl(request.getImageUrl());
+            if (!request.getImageUrl().equals("")) {
+                model.setImageUrl(request.getImageUrl());
+            }
             return new ResponseResult(new Status(200, "Successfully"), repository.save(model));
         } else {
             return new ResponseResult(new Status(200, "Không tìm thấy thông tin của người dùng, vui lòng thử lại "), null);
