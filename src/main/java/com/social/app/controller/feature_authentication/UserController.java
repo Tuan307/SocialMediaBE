@@ -7,6 +7,8 @@ import com.social.app.service.feature_authentication.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "api/v1/users")
 public class UserController {
@@ -17,6 +19,12 @@ public class UserController {
     public ResponseResult getUserProfile(@PathVariable("id") String id) {
         return userService.getUserProfile(id);
     }
+
+    @GetMapping("/nearby")
+    public List<User> findNearestUsers(@RequestParam("userId") String userId, @RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude, @RequestParam("limit") int limit) {
+        return userService.findNearestUsers(userId, latitude, longitude,limit);
+    }
+
 
     @PutMapping("/update/profile")
     public ResponseResult updateProfile(@RequestBody UpdateUserRequest request) {

@@ -19,6 +19,17 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    public List<User> findNearestUsers(String yourUserId, double yourLat, double yourLng,long limit) {
+        List<User> list = repository.findNearestUsers(yourLat, yourLng,limit);
+        for (User u : list) {
+            if (u.getUserId().equals(yourUserId)) {
+                list.remove(u);
+                break;
+            }
+        }
+        return list;
+    }
+
     public ResponseResult getUserProfile(String id) {
         Optional<User> user = repository.findUserByUserId(id);
         if (user.isPresent()) {
