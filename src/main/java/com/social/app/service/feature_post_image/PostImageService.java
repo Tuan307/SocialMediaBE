@@ -2,9 +2,9 @@ package com.social.app.service.feature_post_image;
 
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
-import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_post_image.*;
-import com.social.app.repository.feature_authentication.UserRepository;
+import com.social.app.repository.feature_user.UserRepository;
 import com.social.app.repository.feature_post_image.PostImageRepository;
 import com.social.app.repository.feature_post_image.PostRepository;
 import com.social.app.repository.feature_post_image.SavedPostRepository;

@@ -1,6 +1,6 @@
-package com.social.app.repository.feature_authentication;
+package com.social.app.repository.feature_user;
 
-import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_user.User;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

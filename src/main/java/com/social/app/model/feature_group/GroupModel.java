@@ -1,7 +1,7 @@
 package com.social.app.model.feature_group;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_notification.NotificationModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -2,14 +2,14 @@ package com.social.app.service.feature_group;
 
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
-import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_group.*;
 import com.social.app.model.feature_group.request.AddGroupMemberRequest;
 import com.social.app.model.feature_group.request.CreateGroupPostItem;
 import com.social.app.model.feature_group.request.CreateGroupRequest;
 import com.social.app.model.feature_group.request.GroupRequestOrInvite;
 import com.social.app.model.feature_notification.NotificationModel;
-import com.social.app.repository.feature_authentication.UserRepository;
+import com.social.app.repository.feature_user.UserRepository;
 import com.social.app.repository.feature_group.GroupInvitationRepository;
 import com.social.app.repository.feature_group.GroupMemberRepository;
 import com.social.app.repository.feature_group.GroupModelRepository;

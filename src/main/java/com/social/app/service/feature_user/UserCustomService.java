@@ -1,7 +1,7 @@
-package com.social.app.service.feature_authentication;
+package com.social.app.service.feature_user;
 
-import com.social.app.model.feature_authentication.User;
-import com.social.app.repository.feature_authentication.UserRepositoryCustom;
+import com.social.app.model.feature_user.User;
+import com.social.app.repository.feature_user.UserRepositoryCustom;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;

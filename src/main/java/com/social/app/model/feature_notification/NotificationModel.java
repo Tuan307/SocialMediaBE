@@ -1,6 +1,6 @@
 package com.social.app.model.feature_notification;
 
-import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_group.GroupModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

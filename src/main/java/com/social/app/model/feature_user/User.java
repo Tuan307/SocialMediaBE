@@ -1,4 +1,4 @@
-package com.social.app.model.feature_authentication;
+package com.social.app.model.feature_user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.social.app.model.feature_group.GroupInvitationModel;
@@ -72,6 +72,10 @@ public class User {
     @OneToMany(mappedBy = "fromInvitedUserId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<GroupInvitationModel> groupInvitationMadeModelList;
+
+    @OneToMany(mappedBy = "userInterest", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<UserInterestProfile> userInterestProfiles;
 
     public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude, List<PostItem> postItemList) {
         this.userId = userId;

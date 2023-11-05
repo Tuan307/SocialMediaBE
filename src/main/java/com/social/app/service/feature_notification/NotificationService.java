@@ -2,10 +2,10 @@ package com.social.app.service.feature_notification;
 
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
-import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_notification.NotificationItemRequest;
 import com.social.app.model.feature_notification.NotificationModel;
-import com.social.app.repository.feature_authentication.UserRepository;
+import com.social.app.repository.feature_user.UserRepository;
 import com.social.app.repository.feature_notification.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

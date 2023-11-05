@@ -1,4 +1,4 @@
-package com.social.app.model.feature_authentication;
+package com.social.app.model.feature_user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.social.app.model.common;
 
-import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_user.User;
 
 public class PaginationRequestModel {
     private int pageNumber;

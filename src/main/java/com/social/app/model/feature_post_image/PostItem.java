@@ -1,6 +1,6 @@
 package com.social.app.model.feature_post_image;
 
-import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

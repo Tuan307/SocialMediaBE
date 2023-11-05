@@ -1,10 +1,11 @@
-package com.social.app.service.feature_authentication;
+package com.social.app.service.feature_user;
 
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
-import com.social.app.model.feature_authentication.UpdateUserRequest;
-import com.social.app.model.feature_authentication.User;
-import com.social.app.repository.feature_authentication.UserRepository;
+import com.social.app.model.feature_user.UpdateUserRequest;
+import com.social.app.model.feature_user.User;
+import com.social.app.repository.feature_user.TourInterestRepository;
+import com.social.app.repository.feature_user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,9 +19,11 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private TourInterestRepository interestRepository;
 
-    public List<User> findNearestUsers(String yourUserId, double yourLat, double yourLng,long limit) {
-        List<User> list = repository.findNearestUsers(yourLat, yourLng,limit);
+    public List<User> findNearestUsers(String yourUserId, double yourLat, double yourLng, long limit) {
+        List<User> list = repository.findNearestUsers(yourLat, yourLng, limit);
         for (User u : list) {
             if (u.getUserId().equals(yourUserId)) {
                 list.remove(u);
@@ -75,4 +78,7 @@ public class UserService {
         return new ResponseResult(new Status(200, "Successfully"), list);
     }
 
+    public ResponseResult getAllInterests() {
+        return new ResponseResult(new Status(200, "Successfully") , interestRepository.findAll());
+    }
 }

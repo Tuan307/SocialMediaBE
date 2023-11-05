@@ -1,6 +1,6 @@
-package com.social.app.repository.feature_authentication;
+package com.social.app.repository.feature_user;
 
-import com.social.app.model.feature_authentication.User;
+import com.social.app.model.feature_user.User;
 
 import java.util.List;
 
