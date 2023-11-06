@@ -3,6 +3,7 @@ package com.social.app.controller.feature_user;
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.feature_user.UpdateUserRequest;
 import com.social.app.model.feature_user.User;
+import com.social.app.model.feature_user.request.UserInterestRequest;
 import com.social.app.service.feature_user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,20 @@ public class UserController {
     @GetMapping("/interest")
     public ResponseResult getAllInterests() {
         return userService.getAllInterests();
+    }
+
+    @GetMapping("/interest/check")
+    public ResponseResult checkIfUserHasInterest(@RequestParam("userId") String userId) {
+        return userService.checkIfUserHasInterest(userId);
+    }
+
+    @PostMapping("/interest/save")
+    public ResponseResult saveUserInterest(@RequestBody UserInterestRequest request) {
+        return userService.saveUserInterest(request);
+    }
+
+    @PostMapping("/interest/update")
+    public ResponseResult updateUserInterest(@RequestBody UserInterestRequest request) {
+        return userService.updateUserInterest(request);
     }
 }

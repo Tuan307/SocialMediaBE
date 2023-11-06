@@ -1,5 +1,6 @@
 package com.social.app.model.feature_user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class UserInterestProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User userInterest;
     @ManyToOne

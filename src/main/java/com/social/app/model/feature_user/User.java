@@ -74,7 +74,6 @@ public class User {
     private List<GroupInvitationModel> groupInvitationMadeModelList;
 
     @OneToMany(mappedBy = "userInterest", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<UserInterestProfile> userInterestProfiles;
 
     public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude, List<PostItem> postItemList) {

@@ -2,10 +2,14 @@ package com.social.app.service.feature_user;
 
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
+import com.social.app.model.feature_user.TourInterest;
 import com.social.app.model.feature_user.UpdateUserRequest;
 import com.social.app.model.feature_user.User;
+import com.social.app.model.feature_user.UserInterestProfile;
+import com.social.app.model.feature_user.request.UserInterestRequest;
 import com.social.app.repository.feature_user.TourInterestRepository;
 import com.social.app.repository.feature_user.UserRepository;
+import com.social.app.repository.feature_user.UserTourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +25,8 @@ public class UserService {
     private UserRepository repository;
     @Autowired
     private TourInterestRepository interestRepository;
+    @Autowired
+    private UserTourRepository userTourRepository;
 
     public List<User> findNearestUsers(String yourUserId, double yourLat, double yourLng, long limit) {
         List<User> list = repository.findNearestUsers(yourLat, yourLng, limit);
@@ -79,6 +85,34 @@ public class UserService {
     }
 
     public ResponseResult getAllInterests() {
-        return new ResponseResult(new Status(200, "Successfully") , interestRepository.findAll());
+        return new ResponseResult(new Status(200, "Successfully"), interestRepository.findAll());
+    }
+
+    public ResponseResult saveUserInterest(UserInterestRequest request) {
+        for (int i = 0; i < request.getInterests().size(); i++) {
+            TourInterest tour = request.getInterests().get(i);
+            UserInterestProfile userInterestProfile = new UserInterestProfile(0L, new User(request.getUserId()), tour);
+            userTourRepository.save(userInterestProfile);
+        }
+        return new ResponseResult(new Status(200, "Successfully"), userTourRepository.findByUserId(request.getUserId()));
+    }
+
+    public ResponseResult updateUserInterest(UserInterestRequest request) {
+        userTourRepository.deleteInterestByUserId(request.getUserId());
+        for (int i = 0; i < request.getInterests().size(); i++) {
+            TourInterest tour = request.getInterests().get(i);
+            UserInterestProfile userInterestProfile = new UserInterestProfile(0L, new User(request.getUserId()), tour);
+            userTourRepository.save(userInterestProfile);
+        }
+        return new ResponseResult(new Status(200, "Successfully"), userTourRepository.findByUserId(request.getUserId()));
+    }
+
+    public ResponseResult checkIfUserHasInterest(String userId) {
+        List<UserInterestProfile> list = userTourRepository.findByUserId(userId);
+        if (list.isEmpty()) {
+            return new ResponseResult(new Status(200, "Successfully"), false);
+        } else {
+            return new ResponseResult(new Status(200, "Successfully"), true);
+        }
     }
 }
