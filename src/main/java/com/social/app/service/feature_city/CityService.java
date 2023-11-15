@@ -17,13 +17,17 @@ public class CityService {
     private CityRepository cityRepository;
 
     public ResponseResult addCity(CityRequest request) {
-        City city = new City(request.getCityId(), request.getCityName(), request.getDescription(), request.getTag(), new ArrayList<>());
+        City city = new City(request.getCityId(), request.getCityName(), request.getDescription(), request.getTag(), new ArrayList<>(), null);
         for (int i = 0; i < request.getCityImages().size(); i++) {
             CityImages cityImages = new CityImages(0L, request.getCityImages().get(i), new City(request.getCityId()));
             city.getCityImages().add(cityImages);
         }
         City result = cityRepository.save(city);
         return new ResponseResult(new Status(200, "Successfully"), result);
+    }
+
+    public ResponseResult searchForCity(String keyword) {
+        return new ResponseResult(new Status(200, "Successfully"), cityRepository.searchCityByName(keyword));
     }
 
     public ResponseResult getAllCity() {

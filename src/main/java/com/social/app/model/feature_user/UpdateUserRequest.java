@@ -15,4 +15,6 @@ public class UpdateUserRequest {
     private String fullName;
     private String bio;
     private String imageUrl;
+    private Double latitude;
+    private Double longitude;
 }

@@ -22,6 +22,7 @@ public class PostRequest {
     private Double checkInLongitude;
     private String type;
     private String videoUrl;
+    private String question;
 
     @Override
     public String toString() {

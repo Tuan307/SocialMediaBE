@@ -52,9 +52,21 @@ public class UserService {
         Optional<User> user = repository.findUserByUserId(request.getUserId());
         if (user.isPresent()) {
             User model = user.get();
-            model.setBio(request.getBio());
-            model.setUserName(request.getUserName());
-            model.setFullName(request.getFullName());
+            if (!request.getBio().equals("")) {
+                model.setBio(request.getBio());
+            }
+            if (!request.getUserName().equals("")) {
+                model.setUserName(request.getUserName());
+            }
+            if (!request.getFullName().equals("")) {
+                model.setFullName(request.getFullName());
+            }
+            if (request.getLatitude() != null) {
+                model.setLatitude(request.getLatitude());
+            }
+            if (request.getLongitude() != null) {
+                model.setLongitude(request.getLongitude());
+            }
             if (!request.getImageUrl().equals("")) {
                 model.setImageUrl(request.getImageUrl());
             }

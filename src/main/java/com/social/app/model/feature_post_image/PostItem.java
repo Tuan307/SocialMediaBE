@@ -39,12 +39,13 @@ public class PostItem {
     private String type;
     @Column(name = "video_url")
     private String videoUrl;
-
+    @Column(name = "question")
+    private String question;
     @OneToMany(mappedBy = "post_saved_id", cascade = CascadeType.ALL)
     @Transient
     private List<SavedPostItem> savedPostItems;
 
-    public PostItem(String postId, String description, List<PostImages> imagesList, User postUserId, String checkInTimestamp, String checkInAddress, Double checkInLatitude, Double checkInLongitude, String type, String videoUrl) {
+    public PostItem(String postId, String description, List<PostImages> imagesList, User postUserId, String checkInTimestamp, String checkInAddress, Double checkInLatitude, Double checkInLongitude, String type, String videoUrl, String question) {
         this.postId = postId;
         this.description = description;
         this.imagesList = imagesList;
@@ -55,6 +56,7 @@ public class PostItem {
         this.checkInLongitude = checkInLongitude;
         this.type = type;
         this.videoUrl = videoUrl;
+        this.question = question;
     }
 
     public PostItem(String postId) {

@@ -26,6 +26,8 @@ public class City {
     private String tag;
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CityImages> cityImages;
+    @Column(name = "url")
+    private String url;
 
     public City(Long id) {
         this.cityId = id;

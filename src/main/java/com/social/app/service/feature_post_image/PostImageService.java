@@ -2,12 +2,12 @@ package com.social.app.service.feature_post_image;
 
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
-import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_post_image.*;
-import com.social.app.repository.feature_user.UserRepository;
+import com.social.app.model.feature_user.User;
 import com.social.app.repository.feature_post_image.PostImageRepository;
 import com.social.app.repository.feature_post_image.PostRepository;
 import com.social.app.repository.feature_post_image.SavedPostRepository;
+import com.social.app.repository.feature_user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +31,7 @@ public class PostImageService {
     private UserRepository userRepository;
 
     public ResponseResult saveData(PostRequest postRequest) {
-        PostItem item = new PostItem(postRequest.getId(), postRequest.getDescription(), new ArrayList<PostImages>(), new User(postRequest.getUserId()), postRequest.getCheckInTimestamp(), postRequest.getCheckInAddress(), postRequest.getCheckInLatitude(), postRequest.getCheckInLongitude(), postRequest.getType(), postRequest.getVideoUrl());
+        PostItem item = new PostItem(postRequest.getId(), postRequest.getDescription(), new ArrayList<PostImages>(), new User(postRequest.getUserId()), postRequest.getCheckInTimestamp(), postRequest.getCheckInAddress(), postRequest.getCheckInLatitude(), postRequest.getCheckInLongitude(), postRequest.getType(), postRequest.getVideoUrl(), postRequest.getQuestion());
         if (postRequest.getType().equals("image")) {
             for (int i = 0; i < postRequest.getImagesList().size(); i++) {
                 PostImages post = new PostImages(null, postRequest.getImagesList().get(i), new PostItem(postRequest.getId()));

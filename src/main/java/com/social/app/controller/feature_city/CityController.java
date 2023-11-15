@@ -17,6 +17,11 @@ public class CityController {
         return cityService.addCity(request);
     }
 
+    @GetMapping("/search")
+    public ResponseResult searchForCity(@RequestParam("keyword") String keyword) {
+        return cityService.searchForCity(keyword);
+    }
+
     @GetMapping("/all")
     public ResponseResult getAllCity() {
         return cityService.getAllCity();
