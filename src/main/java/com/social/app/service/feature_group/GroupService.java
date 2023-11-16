@@ -2,19 +2,16 @@ package com.social.app.service.feature_group;
 
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
-import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_group.*;
-import com.social.app.model.feature_group.request.AddGroupMemberRequest;
-import com.social.app.model.feature_group.request.CreateGroupPostItem;
-import com.social.app.model.feature_group.request.CreateGroupRequest;
-import com.social.app.model.feature_group.request.GroupRequestOrInvite;
+import com.social.app.model.feature_group.request.*;
 import com.social.app.model.feature_notification.NotificationModel;
-import com.social.app.repository.feature_user.UserRepository;
+import com.social.app.model.feature_user.User;
 import com.social.app.repository.feature_group.GroupInvitationRepository;
 import com.social.app.repository.feature_group.GroupMemberRepository;
 import com.social.app.repository.feature_group.GroupModelRepository;
 import com.social.app.repository.feature_group.GroupPostItemRepository;
 import com.social.app.repository.feature_notification.NotificationRepository;
+import com.social.app.repository.feature_user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
+import static com.social.app.common.CommonUtils.GROUP_EXIST_ERROR_RESPONSE;
+import static com.social.app.common.CommonUtils.SUCCESSFULLY_RESPONSE;
 
 @Service
 public class GroupService {
@@ -304,5 +304,27 @@ public class GroupService {
     public ResponseResult getAllRequestInGroup(Long groupId) {
         List<GroupInvitationModel> list = groupInvitationRepository.findInvitationByGroupId(groupId);
         return new ResponseResult(new Status(200, "Successfully"), list);
+    }
+
+    public ResponseResult updateDetailGroup(Long groupId, UpdateGroupRequest request) {
+        Optional<GroupModel> groupModel = groupModelRepository.findById(groupId);
+        if (groupModel.isPresent()) {
+            GroupModel updateGroup = groupModel.get();
+            if (!request.getGroupName().equals("")) {
+                updateGroup.setGroupName(request.getGroupName());
+            }
+            if (!request.getGroupImage().equals("")) {
+                updateGroup.setGroupImageUrl(request.getGroupImage());
+            }
+            if (!request.getGroupDescription().equals("")) {
+                updateGroup.setGroupDescription(request.getGroupDescription());
+            }
+            if (!request.getPrivacy().equals("")) {
+                updateGroup.setGroupPrivacy(request.getPrivacy());
+            }
+            return new ResponseResult(new Status(200, SUCCESSFULLY_RESPONSE), groupModelRepository.save(updateGroup));
+        } else {
+            return new ResponseResult(new Status(200, GROUP_EXIST_ERROR_RESPONSE), null);
+        }
     }
 }

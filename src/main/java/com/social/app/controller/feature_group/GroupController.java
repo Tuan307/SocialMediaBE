@@ -1,10 +1,7 @@
 package com.social.app.controller.feature_group;
 
 import com.social.app.model.common.ResponseResult;
-import com.social.app.model.feature_group.request.AddGroupMemberRequest;
-import com.social.app.model.feature_group.request.CreateGroupPostItem;
-import com.social.app.model.feature_group.request.CreateGroupRequest;
-import com.social.app.model.feature_group.request.GroupRequestOrInvite;
+import com.social.app.model.feature_group.request.*;
 import com.social.app.service.feature_group.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +30,11 @@ public class GroupController {
     @GetMapping("/all")
     public ResponseResult getAllNotJoinedGroup(@RequestParam("userId") String userId, @RequestParam("pageCount") int pageCount, @RequestParam("pageNumber") int pageNumber) {
         return groupService.getAllGroup(userId, pageCount, pageNumber - 1);
+    }
+
+    @PostMapping("/update")
+    public ResponseResult updateGroup(@RequestParam("groupId") Long groupId, @RequestBody UpdateGroupRequest request) {
+        return groupService.updateDetailGroup(groupId, request);
     }
 
     @DeleteMapping("/delete/group")
