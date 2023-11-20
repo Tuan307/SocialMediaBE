@@ -1,11 +1,13 @@
 package com.social.app.service.feature_user;
 
+import com.social.app.common.CommonUtils;
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
 import com.social.app.model.feature_user.TourInterest;
 import com.social.app.model.feature_user.UpdateUserRequest;
 import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_user.UserInterestProfile;
+import com.social.app.model.feature_user.request.UpdateLastOnlineRequest;
 import com.social.app.model.feature_user.request.UserInterestRequest;
 import com.social.app.repository.feature_user.TourInterestRepository;
 import com.social.app.repository.feature_user.UserRepository;
@@ -72,7 +74,7 @@ public class UserService {
             }
             return new ResponseResult(new Status(200, "Successfully"), repository.save(model));
         } else {
-            return new ResponseResult(new Status(200, "Không tìm thấy thông tin của người dùng, vui lòng thử lại "), null);
+            return new ResponseResult(new Status(200, CommonUtils.USER_EXIST_ERROR_RESPONSE), null);
         }
     }
 
@@ -125,6 +127,19 @@ public class UserService {
             return new ResponseResult(new Status(200, "Successfully"), false);
         } else {
             return new ResponseResult(new Status(200, "Successfully"), true);
+        }
+    }
+
+    public ResponseResult updateUserLastOnline(UpdateLastOnlineRequest request, String userId) {
+        Optional<User> user = repository.findUserByUserId(userId);
+        if (user.isPresent()) {
+            User model = user.get();
+            if (!request.getLastOnline().equals("")) {
+                model.setLastOnline(request.getLastOnline());
+            }
+            return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), repository.save(model));
+        } else {
+            return new ResponseResult(new Status(200, CommonUtils.USER_EXIST_ERROR_RESPONSE), null);
         }
     }
 }

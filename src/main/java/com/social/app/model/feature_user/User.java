@@ -8,6 +8,7 @@ import com.social.app.model.feature_group.GroupPostItem;
 import com.social.app.model.feature_notification.NotificationModel;
 import com.social.app.model.feature_post_image.PostItem;
 import com.social.app.model.feature_post_image.SavedPostItem;
+import com.social.app.model.feature_report.ReportModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,10 +41,15 @@ public class User {
     private Double latitude;
     @Column(name = "longitude")
     private Double longitude;
-
+    @Column(name = "last_online")
+    private String lastOnline;
     @OneToMany(mappedBy = "postUserId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<PostItem> postItemList;
+
+    @OneToMany(mappedBy = "userReport", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<ReportModel> reportModels;
 
     @OneToMany(mappedBy = "groupPostUserId", cascade = CascadeType.ALL)
     @JsonIgnore

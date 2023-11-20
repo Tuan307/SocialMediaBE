@@ -3,6 +3,7 @@ package com.social.app.controller.feature_user;
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.feature_user.UpdateUserRequest;
 import com.social.app.model.feature_user.User;
+import com.social.app.model.feature_user.request.UpdateLastOnlineRequest;
 import com.social.app.model.feature_user.request.UserInterestRequest;
 import com.social.app.service.feature_user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,10 @@ public class UserController {
     @PostMapping("/interest/update")
     public ResponseResult updateUserInterest(@RequestBody UserInterestRequest request) {
         return userService.updateUserInterest(request);
+    }
+
+    @PostMapping("/update/last/online")
+    public ResponseResult updateUserLastOnline(@RequestBody UpdateLastOnlineRequest request, @RequestParam("userId") String userId) {
+        return userService.updateUserLastOnline(request, userId);
     }
 }

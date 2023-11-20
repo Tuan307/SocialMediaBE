@@ -4,4 +4,5 @@ public class CommonUtils {
     public static final String SUCCESSFULLY_RESPONSE = "Thành công";
     public static final String ERROR_RESPONSE = "Thất bại";
     public static final String GROUP_EXIST_ERROR_RESPONSE = "Không tồn tại nhóm";
+    public static String USER_EXIST_ERROR_RESPONSE = "Không tìm thấy thông tin của người dùng, vui lòng thử lại";
 }
