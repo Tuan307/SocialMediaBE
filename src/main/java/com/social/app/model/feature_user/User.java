@@ -43,6 +43,8 @@ public class User {
     private Double longitude;
     @Column(name = "last_online")
     private String lastOnline;
+    @Column(name = "is_block")
+    private Boolean isBlock;
     @OneToMany(mappedBy = "postUserId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<PostItem> postItemList;

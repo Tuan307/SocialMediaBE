@@ -3,6 +3,7 @@ package com.social.app.controller.feature_user;
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.feature_user.UpdateUserRequest;
 import com.social.app.model.feature_user.User;
+import com.social.app.model.feature_user.request.UpdateBlockRequest;
 import com.social.app.model.feature_user.request.UpdateLastOnlineRequest;
 import com.social.app.model.feature_user.request.UserInterestRequest;
 import com.social.app.service.feature_user.UserService;
@@ -42,6 +43,11 @@ public class UserController {
         return userService.registerUser(user);
     }
 
+    @DeleteMapping("/delete")
+    public ResponseResult deleteUser(@RequestParam("userId") String userId) {
+        return userService.deleteUser(userId);
+    }
+
     @GetMapping("/search")
     public ResponseResult searchUsers(@RequestParam("keyword") String name, @RequestParam("pageCount") int pageCount, @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber) {
         return userService.searchUser(name, pageNumber - 1, pageCount);
@@ -65,6 +71,11 @@ public class UserController {
     @PostMapping("/interest/update")
     public ResponseResult updateUserInterest(@RequestBody UserInterestRequest request) {
         return userService.updateUserInterest(request);
+    }
+
+    @PostMapping("/block")
+    public ResponseResult updateUserBlock(@RequestParam("userId") String userId, @RequestBody UpdateBlockRequest request) {
+        return userService.blockUser(userId, request);
     }
 
     @PostMapping("/update/last/online")

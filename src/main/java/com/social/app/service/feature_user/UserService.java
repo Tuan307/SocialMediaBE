@@ -7,6 +7,7 @@ import com.social.app.model.feature_user.TourInterest;
 import com.social.app.model.feature_user.UpdateUserRequest;
 import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_user.UserInterestProfile;
+import com.social.app.model.feature_user.request.UpdateBlockRequest;
 import com.social.app.model.feature_user.request.UpdateLastOnlineRequest;
 import com.social.app.model.feature_user.request.UserInterestRequest;
 import com.social.app.repository.feature_user.TourInterestRepository;
@@ -91,6 +92,27 @@ public class UserService {
     public ResponseResult getAllUsers(int pageCount, int pageNumber) {
         Page<User> users = repository.findAll(PageRequest.of(pageNumber, pageCount));
         return new ResponseResult(new Status(HttpStatus.OK.value(), "Successfully"), users, pageCount, pageNumber + 1);
+    }
+
+    public ResponseResult deleteUser(String userId) {
+        Optional<User> user = repository.findUserByUserId(userId);
+        if (user.isPresent()) {
+            repository.deleteUserByUserId(user.get().getUserId());
+            return new ResponseResult(new Status(HttpStatus.OK.value(), CommonUtils.SUCCESSFULLY_RESPONSE), null);
+        } else {
+            return new ResponseResult(new Status(HttpStatus.OK.value(), CommonUtils.USER_EXIST_ERROR_RESPONSE), null);
+        }
+    }
+
+    public ResponseResult blockUser(String userId, UpdateBlockRequest request) {
+        Optional<User> user = repository.findUserByUserId(userId);
+        if (user.isPresent()) {
+            User model = user.get();
+            model.setIsBlock(request.isBlockUser());
+            return new ResponseResult(new Status(HttpStatus.OK.value(), CommonUtils.SUCCESSFULLY_RESPONSE), repository.save(model));
+        } else {
+            return new ResponseResult(new Status(HttpStatus.OK.value(), CommonUtils.USER_EXIST_ERROR_RESPONSE), null);
+        }
     }
 
     public ResponseResult searchUser(String keyword, int pageNumber, int pageCount) {
