@@ -3,8 +3,10 @@ package com.social.app.repository.feature_group;
 import com.social.app.model.feature_group.GroupMemberModel;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +28,9 @@ public interface GroupMemberRepository extends JpaRepository<GroupMemberModel, L
 
     @Query(value = "SELECT p FROM GroupMemberModel p WHERE p.groupModelId.id = ?1 AND p.groupMemberUserId.userName LIKE ?2%")
     List<GroupMemberModel> searchMemberByName(Long groupId, String keyword);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from group_member p where p.user_id =:userID",nativeQuery = true)
+    void deleteAllByUserId(String userID);
 }

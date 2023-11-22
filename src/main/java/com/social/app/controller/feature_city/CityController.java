@@ -17,6 +17,11 @@ public class CityController {
         return cityService.addCity(request);
     }
 
+    @DeleteMapping("/delete")
+    public ResponseResult addCity(@RequestParam("id") Long id) {
+        return cityService.deleteCity(id);
+    }
+
     @GetMapping("/search")
     public ResponseResult searchForCity(@RequestParam("keyword") String keyword) {
         return cityService.searchForCity(keyword);

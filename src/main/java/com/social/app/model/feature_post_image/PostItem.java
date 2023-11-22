@@ -1,5 +1,6 @@
 package com.social.app.model.feature_post_image;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.social.app.model.feature_user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,7 +43,7 @@ public class PostItem {
     @Column(name = "question")
     private String question;
     @OneToMany(mappedBy = "post_saved_id", cascade = CascadeType.ALL)
-    @Transient
+    @JsonIgnore
     private List<SavedPostItem> savedPostItems;
 
     public PostItem(String postId, String description, List<PostImages> imagesList, User postUserId, String checkInTimestamp, String checkInAddress, Double checkInLatitude, Double checkInLongitude, String type, String videoUrl, String question) {

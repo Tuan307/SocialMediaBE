@@ -21,7 +21,7 @@ public class TourInterest {
     private Long id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "tourInterest", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tourInterest", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<UserInterestProfile> userInterestProfiles;
 }

@@ -3,6 +3,13 @@ package com.social.app.service.feature_user;
 import com.social.app.common.CommonUtils;
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
+import com.social.app.model.feature_group.GroupInvitationModel;
+import com.social.app.model.feature_group.GroupMemberModel;
+import com.social.app.model.feature_group.GroupModel;
+import com.social.app.model.feature_group.GroupPostItem;
+import com.social.app.model.feature_notification.NotificationModel;
+import com.social.app.model.feature_post_image.PostItem;
+import com.social.app.model.feature_post_image.SavedPostItem;
 import com.social.app.model.feature_user.TourInterest;
 import com.social.app.model.feature_user.UpdateUserRequest;
 import com.social.app.model.feature_user.User;
@@ -10,6 +17,13 @@ import com.social.app.model.feature_user.UserInterestProfile;
 import com.social.app.model.feature_user.request.UpdateBlockRequest;
 import com.social.app.model.feature_user.request.UpdateLastOnlineRequest;
 import com.social.app.model.feature_user.request.UserInterestRequest;
+import com.social.app.repository.feature_group.GroupInvitationRepository;
+import com.social.app.repository.feature_group.GroupMemberRepository;
+import com.social.app.repository.feature_group.GroupModelRepository;
+import com.social.app.repository.feature_group.GroupPostItemRepository;
+import com.social.app.repository.feature_notification.NotificationRepository;
+import com.social.app.repository.feature_post_image.PostRepository;
+import com.social.app.repository.feature_post_image.SavedPostRepository;
 import com.social.app.repository.feature_user.TourInterestRepository;
 import com.social.app.repository.feature_user.UserRepository;
 import com.social.app.repository.feature_user.UserTourRepository;
@@ -19,6 +33,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +42,23 @@ public class UserService {
     @Autowired
     private UserRepository repository;
     @Autowired
+    private PostRepository postRepository;
+    @Autowired
+    private SavedPostRepository savedPostRepository;
+    @Autowired
     private TourInterestRepository interestRepository;
     @Autowired
     private UserTourRepository userTourRepository;
+    @Autowired
+    private NotificationRepository notificationRepository;
+    @Autowired
+    private GroupPostItemRepository groupPostItemRepository;
+    @Autowired
+    private GroupModelRepository groupModelRepository;
+    @Autowired
+    private GroupMemberRepository groupMemberRepository;
+    @Autowired
+    private GroupInvitationRepository groupInvitationRepository;
 
     public List<User> findNearestUsers(String yourUserId, double yourLat, double yourLng, long limit) {
         List<User> list = repository.findNearestUsers(yourLat, yourLng, limit);
@@ -97,6 +126,63 @@ public class UserService {
     public ResponseResult deleteUser(String userId) {
         Optional<User> user = repository.findUserByUserId(userId);
         if (user.isPresent()) {
+            List<SavedPostItem> posts = user.get().getSavedPostItems();
+            for (Iterator<SavedPostItem> iterator = posts.iterator(); iterator.hasNext(); ) {
+                SavedPostItem post = iterator.next();
+                post.setUser_saved_id(null);
+                iterator.remove(); //remove the child first
+            }
+            List<PostItem> postItems = user.get().getPostItemList();
+            for (Iterator<PostItem> iterator = postItems.iterator(); iterator.hasNext(); ) {
+                PostItem post = iterator.next();
+                post.setPostUserId(null);
+                iterator.remove(); //remove the child first
+            }
+
+            List<GroupPostItem> groupPostItems = user.get().getGroupPostItemList();
+            for (Iterator<GroupPostItem> iterator = groupPostItems.iterator(); iterator.hasNext(); ) {
+                GroupPostItem post = iterator.next();
+                post.setGroupPostUserId(null);
+                iterator.remove(); //remove the child first
+            }
+            List<NotificationModel> notificationModels = user.get().getNotificationModelList();
+            for (Iterator<NotificationModel> iterator = notificationModels.iterator(); iterator.hasNext(); ) {
+                NotificationModel post = iterator.next();
+                post.setNotificationUserId(null);
+                iterator.remove(); //remove the child first
+            }
+
+            List<GroupModel> groupModels = user.get().getGroupModelOwner();
+            for (Iterator<GroupModel> iterator = groupModels.iterator(); iterator.hasNext(); ) {
+                GroupModel post = iterator.next();
+                post.setGroupOwner(null);
+                iterator.remove(); //remove the child first
+            }
+            List<GroupMemberModel> groupMemberModels = user.get().getGroupMemberModelList();
+            for (Iterator<GroupMemberModel> iterator = groupMemberModels.iterator(); iterator.hasNext(); ) {
+                GroupMemberModel post = iterator.next();
+                post.setGroupMemberUserId(null);
+                iterator.remove(); //remove the child first
+            }
+            List<GroupInvitationModel> groupInvitationModelList = user.get().getGroupInvitationModelList();
+            for (Iterator<GroupInvitationModel> iterator = groupInvitationModelList.iterator(); iterator.hasNext(); ) {
+                GroupInvitationModel post = iterator.next();
+                post.setRequestUserId(null);
+                iterator.remove(); //remove the child first
+            }
+            List<GroupInvitationModel> groupInvitationMadeModelList = user.get().getGroupInvitationMadeModelList();
+            for (Iterator<GroupInvitationModel> iterator = groupInvitationMadeModelList.iterator(); iterator.hasNext(); ) {
+                GroupInvitationModel post = iterator.next();
+                post.setFromInvitedUserId(null);
+                iterator.remove(); //remove the child first
+            }
+            List<UserInterestProfile> userInterestProfiles = user.get().getUserInterestProfiles();
+            for (Iterator<UserInterestProfile> iterator = userInterestProfiles.iterator(); iterator.hasNext(); ) {
+                UserInterestProfile post = iterator.next();
+                post.setUserInterest(null);
+                iterator.remove(); //remove the child first
+            }
+
             repository.deleteUserByUserId(user.get().getUserId());
             return new ResponseResult(new Status(HttpStatus.OK.value(), CommonUtils.SUCCESSFULLY_RESPONSE), null);
         } else {

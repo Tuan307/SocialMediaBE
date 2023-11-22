@@ -18,7 +18,7 @@ public class CityImages {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String imageUrl;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "city_id")
     private City city;

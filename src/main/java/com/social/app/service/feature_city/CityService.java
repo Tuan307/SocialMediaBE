@@ -1,5 +1,6 @@
 package com.social.app.service.feature_city;
 
+import com.social.app.common.CommonUtils;
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.common.Status;
 import com.social.app.model.feature_city.City;
@@ -23,14 +24,19 @@ public class CityService {
             city.getCityImages().add(cityImages);
         }
         City result = cityRepository.save(city);
-        return new ResponseResult(new Status(200, "Successfully"), result);
+        return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), result);
     }
 
     public ResponseResult searchForCity(String keyword) {
-        return new ResponseResult(new Status(200, "Successfully"), cityRepository.searchCityByName(keyword));
+        return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), cityRepository.searchCityByName(keyword));
+    }
+
+    public ResponseResult deleteCity(Long id) {
+        cityRepository.deleteById(String.valueOf(id));
+        return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), null);
     }
 
     public ResponseResult getAllCity() {
-        return new ResponseResult(new Status(200, "Successfully"), cityRepository.findAll());
+        return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), cityRepository.findAll());
     }
 }

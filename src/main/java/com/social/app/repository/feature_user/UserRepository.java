@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM User u WHERE u.userId = ?1", nativeQuery = true)
+    @Query(value = "DELETE FROM User u WHERE u.user_id = ?1", nativeQuery = true)
     void deleteUserByUserId(String userId);
 
     Optional<List<User>> findByUserNameContaining(String keyword, PageRequest pageRequest);

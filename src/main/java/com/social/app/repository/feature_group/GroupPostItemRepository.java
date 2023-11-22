@@ -4,8 +4,10 @@ import com.social.app.model.feature_group.GroupPostItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +22,9 @@ public interface GroupPostItemRepository extends JpaRepository<GroupPostItem, St
 
     @Query(value = "SELECT p FROM GroupPostItem p WHERE p.groupPostModelId.id = ?1 AND (p.description LIKE ?2% OR p.groupPostUserId.userName LIKE ?2%)")
     List<GroupPostItem> searchPostByDescription(Long groupId, String keyword);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from group_post_item p where p.group_post_user_id =:userID",nativeQuery = true)
+    void deleteAllByUserId(String userID);
 }

@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -43,15 +45,15 @@ public class GroupModel {
     @JsonIgnore
     private List<GroupMemberModel> groupMemberModels;
 
-    @OneToMany(mappedBy = "groupPostModelId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "groupPostModelId",  cascade =CascadeType.ALL)
     @JsonIgnore
     private List<GroupPostItem> groupPostItemList;
 
-    @OneToMany(mappedBy = "groupId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "groupId",  cascade = CascadeType.ALL)
     @JsonIgnore
     private List<GroupInvitationModel> groupInvitationModelList;
 
-    @OneToMany(mappedBy = "notificationGroupId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "notificationGroupId",  cascade = CascadeType.ALL)
     @JsonIgnore
     private List<NotificationModel> notificationModelList;
 

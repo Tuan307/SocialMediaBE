@@ -45,6 +45,7 @@ public class User {
     private String lastOnline;
     @Column(name = "is_block")
     private Boolean isBlock;
+
     @OneToMany(mappedBy = "postUserId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<PostItem> postItemList;
@@ -65,7 +66,7 @@ public class User {
     @JsonIgnore
     private List<NotificationModel> notificationModelList;
 
-    @OneToMany(mappedBy = "groupOwner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "groupOwner", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<GroupModel> groupModelOwner;
 
@@ -81,7 +82,7 @@ public class User {
     @JsonIgnore
     private List<GroupInvitationModel> groupInvitationMadeModelList;
 
-    @OneToMany(mappedBy = "userInterest", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userInterest", cascade = CascadeType.ALL)
     private List<UserInterestProfile> userInterestProfiles;
 
     public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude, List<PostItem> postItemList) {

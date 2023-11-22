@@ -18,7 +18,7 @@ public class PostImages {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String imageUrl;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "image_post_id")
     private PostItem post;

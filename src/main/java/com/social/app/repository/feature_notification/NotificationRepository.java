@@ -4,8 +4,10 @@ import com.social.app.model.feature_notification.NotificationModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -16,4 +18,9 @@ public interface NotificationRepository extends JpaRepository<NotificationModel,
 
     @Query(value = "SELECT n FROM NotificationModel n WHERE n.notificationOwnerId = ?1 AND n.notificationUserId.userId = ?2 AND n.isRequest = ?3")
     Optional<NotificationModel> findNotificationModel(String notificationOwnerId, String notificationUserId, Boolean isRequest);
+
+    @Modifying
+    @Transactional
+    @Query(value = "delete from notification_item n where n.notification_user_id =:userID",nativeQuery = true)
+    void deleteAllByNotificationUserId(String userID);
 }

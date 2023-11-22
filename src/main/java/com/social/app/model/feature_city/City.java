@@ -24,7 +24,7 @@ public class City {
     private String description;
     @Column(name = "tag")
     private String tag;
-    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "city", cascade = {CascadeType.ALL,CascadeType.REMOVE}, orphanRemoval = true)
     private List<CityImages> cityImages;
     @Column(name = "url")
     private String url;
