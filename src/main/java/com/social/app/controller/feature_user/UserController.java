@@ -63,6 +63,11 @@ public class UserController {
         return userService.checkIfUserHasInterest(userId);
     }
 
+    @GetMapping("/interest/get_user_interest")
+    public ResponseResult getUserInterest(@RequestParam("userId") String userId) {
+        return userService.getUserInterest(userId);
+    }
+
     @PostMapping("/interest/save")
     public ResponseResult saveUserInterest(@RequestBody UserInterestRequest request) {
         return userService.saveUserInterest(request);

@@ -45,15 +45,15 @@ public class GroupModel {
     @JsonIgnore
     private List<GroupMemberModel> groupMemberModels;
 
-    @OneToMany(mappedBy = "groupPostModelId",  cascade =CascadeType.ALL)
+    @OneToMany(mappedBy = "groupPostModelId",  cascade =CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<GroupPostItem> groupPostItemList;
 
-    @OneToMany(mappedBy = "groupId",  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "groupId",  cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<GroupInvitationModel> groupInvitationModelList;
 
-    @OneToMany(mappedBy = "notificationGroupId",  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "notificationGroupId",  cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<NotificationModel> notificationModelList;
 

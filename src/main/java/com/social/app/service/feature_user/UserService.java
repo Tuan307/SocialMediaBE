@@ -17,6 +17,7 @@ import com.social.app.model.feature_user.UserInterestProfile;
 import com.social.app.model.feature_user.request.UpdateBlockRequest;
 import com.social.app.model.feature_user.request.UpdateLastOnlineRequest;
 import com.social.app.model.feature_user.request.UserInterestRequest;
+import com.social.app.model.feature_user.response.UserProfileInterest;
 import com.social.app.repository.feature_group.GroupInvitationRepository;
 import com.social.app.repository.feature_group.GroupMemberRepository;
 import com.social.app.repository.feature_group.GroupModelRepository;
@@ -33,6 +34,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -236,6 +238,24 @@ public class UserService {
         } else {
             return new ResponseResult(new Status(200, "Successfully"), true);
         }
+    }
+
+    public ResponseResult getUserInterest(String userId) {
+        List<TourInterest> interestList = interestRepository.findAll();
+        Optional<User> list = repository.findUserByUserId(userId);
+        List<UserInterestProfile> userInterestProfileList = list.get().getUserInterestProfiles();
+        List<UserProfileInterest> result = new ArrayList<>();
+
+        for (int i = 0; i < interestList.size(); i++) {
+            result.add(new UserProfileInterest(interestList.get(i).getId(), interestList.get(i).getName(), false));
+            for (UserInterestProfile userInterestProfile : userInterestProfileList) {
+                if (interestList.get(i).getId().equals(userInterestProfile.getTourInterest().getId())) {
+                    result.get(i).setHasChosen(true);
+                    break;
+                }
+            }
+        }
+        return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), result);
     }
 
     public ResponseResult updateUserLastOnline(UpdateLastOnlineRequest request, String userId) {

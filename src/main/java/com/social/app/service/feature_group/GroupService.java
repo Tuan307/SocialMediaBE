@@ -94,6 +94,7 @@ public class GroupService {
             groupInvitationModel.setType(requestOrInvite.getType());
             groupInvitationModel.setFromInvitedUserId(fromUserInvited.get());
             groupInvitationModel.setRequestUserId(user.get());
+            var result = groupInvitationRepository.save(groupInvitationModel);
             //notification
             boolean isRequest;
             if (requestOrInvite.getType().equals("invite")) {
@@ -119,7 +120,7 @@ public class GroupService {
             notificationModel.setNotificationUserId(fromUserInvited.get());
             notificationModel.setNotificationOwnerId(requestOrInvite.getUserId());
             notificationRepository.save(notificationModel);
-            return new ResponseResult(new Status(200, "Successfully"), groupInvitationRepository.save(groupInvitationModel));
+            return new ResponseResult(new Status(200, "Successfully"), result);
         } else {
             return new ResponseResult(new Status(200, "Đã có lỗi xảy ra"), null);
         }
@@ -144,6 +145,7 @@ public class GroupService {
                 resultList.add(i);
             }
         }
+        System.out.println(resultList.toString());
         return new ResponseResult(new Status(200, "Successfully"), resultList);
     }
 
