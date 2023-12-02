@@ -3,9 +3,11 @@ package com.social.app.controller.feature_user;
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.feature_user.UpdateUserRequest;
 import com.social.app.model.feature_user.User;
+import com.social.app.model.feature_user.request.FollowUserRequest;
 import com.social.app.model.feature_user.request.UpdateBlockRequest;
 import com.social.app.model.feature_user.request.UpdateLastOnlineRequest;
 import com.social.app.model.feature_user.request.UserInterestRequest;
+import com.social.app.service.feature_user.UserFollowService;
 import com.social.app.service.feature_user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserFollowService userFollowService;
 
     @GetMapping("/{id}")
     public ResponseResult getUserProfile(@PathVariable("id") String id) {
@@ -86,5 +90,25 @@ public class UserController {
     @PostMapping("/update/last/online")
     public ResponseResult updateUserLastOnline(@RequestBody UpdateLastOnlineRequest request, @RequestParam("userId") String userId) {
         return userService.updateUserLastOnline(request, userId);
+    }
+
+    @PostMapping("/follow")
+    public ResponseResult followUser(@RequestBody FollowUserRequest request) {
+        return userFollowService.followUser(request);
+    }
+
+    @PostMapping("/unfollow")
+    public ResponseResult unfollowUser(@RequestBody FollowUserRequest request) {
+        return userFollowService.unfollowUser(request);
+    }
+
+    @PostMapping("/is_following")
+    public ResponseResult checkIfIsFollowing(@RequestBody FollowUserRequest request) {
+        return userFollowService.isFollowingUser(request);
+    }
+
+    @GetMapping("/follow/list")
+    public ResponseResult getListFollowing(@RequestParam("sourceId") String sourceId, @RequestParam("type") String type) {
+        return userFollowService.getListFollowing(sourceId, type);
     }
 }

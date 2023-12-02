@@ -85,6 +85,14 @@ public class User {
     @OneToMany(mappedBy = "userInterest", cascade = CascadeType.ALL)
     private List<UserInterestProfile> userInterestProfiles;
 
+    @OneToMany(mappedBy = "sourceId", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<UserFollow> userFollowList;
+
+    @OneToMany(mappedBy = "targetId", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<UserFollow> userFollowerList;
+
     public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude, List<PostItem> postItemList) {
         this.userId = userId;
         this.userName = userName;
