@@ -36,7 +36,7 @@ public class UserFollowService {
             userFollowRepository.deleteById(u.get().getId());
             return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), true);
         } else {
-            return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), false);
+            return new ResponseResult(new Status(200, CommonUtils.USER_EXIST_ERROR_RESPONSE), false);
         }
     }
 
