@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "city_images")
-public class CityImages {
+public class LocationImages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,8 +21,7 @@ public class CityImages {
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "city_id")
-    private City city;
-
+    private Location location;
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);

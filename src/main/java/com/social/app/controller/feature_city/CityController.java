@@ -2,7 +2,7 @@ package com.social.app.controller.feature_city;
 
 import com.social.app.model.common.ResponseResult;
 import com.social.app.model.feature_city.CityRequest;
-import com.social.app.service.feature_city.CityService;
+import com.social.app.service.feature_city.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,25 +10,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "api/v1/city")
 public class CityController {
     @Autowired
-    private CityService cityService;
+    private LocationService locationService;
 
     @PostMapping("/add")
     public ResponseResult addCity(@RequestBody CityRequest request) {
-        return cityService.addCity(request);
+        return locationService.addCity(request);
     }
 
     @DeleteMapping("/delete")
     public ResponseResult addCity(@RequestParam("id") Long id) {
-        return cityService.deleteCity(id);
+        return locationService.deleteCity(id);
     }
 
     @GetMapping("/search")
     public ResponseResult searchForCity(@RequestParam("keyword") String keyword) {
-        return cityService.searchForCity(keyword);
+        return locationService.searchForCity(keyword);
     }
 
     @GetMapping("/all")
     public ResponseResult getAllCity() {
-        return cityService.getAllCity();
+        return locationService.getAllCity();
     }
 }

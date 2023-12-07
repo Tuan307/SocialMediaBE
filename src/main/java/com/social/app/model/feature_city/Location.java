@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "city")
-public class City {
+public class Location {
     @Id
     @Column(name = "city_id")
     Long cityId;
@@ -24,12 +24,12 @@ public class City {
     private String description;
     @Column(name = "tag")
     private String tag;
-    @OneToMany(mappedBy = "city", cascade = {CascadeType.ALL,CascadeType.REMOVE}, orphanRemoval = true)
-    private List<CityImages> cityImages;
+    @OneToMany(mappedBy = "location", cascade = {CascadeType.ALL,CascadeType.REMOVE}, orphanRemoval = true)
+    private List<LocationImages> locationImages;
     @Column(name = "url")
     private String url;
 
-    public City(Long id) {
+    public Location(Long id) {
         this.cityId = id;
     }
 }
