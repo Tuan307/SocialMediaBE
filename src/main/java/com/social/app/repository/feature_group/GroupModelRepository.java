@@ -12,11 +12,14 @@ import java.util.List;
 
 @Repository
 public interface GroupModelRepository extends JpaRepository<GroupModel, Long> {
+    @Query(value = "SELECT g FROM GroupModel g WHERE g.groupName LIKE ?1%")
+    List<GroupModel> findGroupByName(String groupName, PageRequest pageRequest);
+
     @Query(value = "SELECT g FROM GroupModel g WHERE g.groupOwner.userId = ?1")
     List<GroupModel> findGroupByOwnerId(String userId, PageRequest pageRequest);
 
     @Modifying
     @Transactional
-    @Query(value = "delete from group_model p where p.group_owner_id =:userID",nativeQuery = true)
+    @Query(value = "delete from group_model p where p.group_owner_id =:userID", nativeQuery = true)
     void deleteAllByUserId(String userID);
 }

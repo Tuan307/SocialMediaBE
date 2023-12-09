@@ -21,6 +21,10 @@ public class GroupController {
     public ResponseResult getAllGroupByOwner(@RequestParam("userId") String userId, @RequestParam("pageCount") int pageCount, @RequestParam("pageNumber") int pageNumber) {
         return groupService.getAllGroupByOwner(userId, pageCount, pageNumber - 1);
     }
+    @GetMapping("/search")
+    public ResponseResult searchGroup(@RequestParam("groupName") String groupName, @RequestParam("pageCount") int pageCount, @RequestParam("pageNumber") int pageNumber) {
+        return groupService.searchGroup(groupName, pageCount, pageNumber - 1);
+    }
 
     @GetMapping("")
     public ResponseResult getGroupById(@RequestParam("groupId") Long groupId) {

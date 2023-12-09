@@ -129,6 +129,9 @@ public class GroupService {
     public ResponseResult getAllGroupByOwner(String userId, int pageCount, int pageNumber) {
         return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findGroupByOwnerId(userId, PageRequest.of(pageNumber, pageCount)));
     }
+    public ResponseResult searchGroup(String groupName, int pageCount, int pageNumber) {
+        return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findGroupByName(groupName, PageRequest.of(pageNumber, pageCount)));
+    }
 
     public ResponseResult getGroupById(Long groupId) {
         return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findById(groupId).get());
