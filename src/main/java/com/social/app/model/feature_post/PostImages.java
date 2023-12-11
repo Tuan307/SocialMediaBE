@@ -1,7 +1,6 @@
-package com.social.app.model.feature_group;
+package com.social.app.model.feature_post;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.social.app.model.feature_post_image.PostItem;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,24 +12,23 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "group_post_content_item")
-public class GroupPostContentItem {
+@Table(name = "post_images")
+public class PostImages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "image_url")
     private String imageUrl;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "group_post_id")
-    private GroupPostItem groupPostItem;
-
-
+    @JoinColumn(name = "post_id")
+    private PostItem post;
     @Override
     public String toString() {
-        return "GroupPostContentItem{" +
+        return "PostImages{" +
                 "id=" + id +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", post=" + groupPostItem +
+                ", post=" + post +
                 '}';
     }
 

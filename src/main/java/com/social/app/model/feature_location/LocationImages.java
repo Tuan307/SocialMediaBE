@@ -1,4 +1,4 @@
-package com.social.app.model.feature_post_image;
+package com.social.app.model.feature_location;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -12,27 +12,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "item_post_image")
-public class PostImages {
+@Table(name = "location_images")
+public class LocationImages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "image_url")
     private String imageUrl;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "image_post_id")
-    private PostItem post;
-
-
-    @Override
-    public String toString() {
-        return "PostImages{" +
-                "id=" + id +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", post=" + post +
-                '}';
-    }
-
+    @JoinColumn(name = "location_id")
+    private Location location;
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);

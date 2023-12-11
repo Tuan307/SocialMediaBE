@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "user_tour_interest")
+@Table(name = "user_interest")
 public class UserInterestProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

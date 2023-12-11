@@ -1,7 +1,7 @@
 package com.social.app.controller.feature_city;
 
 import com.social.app.model.common.ResponseResult;
-import com.social.app.model.feature_city.CityRequest;
+import com.social.app.model.feature_location.LocationRequest;
 import com.social.app.service.feature_city.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ public class CityController {
     private LocationService locationService;
 
     @PostMapping("/add")
-    public ResponseResult addCity(@RequestBody CityRequest request) {
+    public ResponseResult addCity(@RequestBody LocationRequest request) {
         return locationService.addCity(request);
     }
 

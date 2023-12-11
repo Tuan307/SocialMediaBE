@@ -1,4 +1,4 @@
-package com.social.app.model.feature_post_image;
+package com.social.app.model.feature_post;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

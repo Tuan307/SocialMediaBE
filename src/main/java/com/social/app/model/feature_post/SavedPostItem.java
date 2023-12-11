@@ -1,4 +1,4 @@
-package com.social.app.model.feature_post_image;
+package com.social.app.model.feature_post;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.social.app.model.feature_user.User;
@@ -21,12 +21,12 @@ public class SavedPostItem {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "post_saved_id")
+    @JoinColumn(name = "post_id")
     private PostItem post_saved_id;
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "user_saved_id")
+    @JoinColumn(name = "user_id")
     private User user_saved_id;
 
 }

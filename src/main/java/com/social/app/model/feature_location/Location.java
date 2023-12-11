@@ -1,4 +1,4 @@
-package com.social.app.model.feature_city;
+package com.social.app.model.feature_location;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,12 +13,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "city")
+@Table(name = "location")
 public class Location {
     @Id
-    @Column(name = "city_id")
+    @Column(name = "id")
     Long cityId;
-    @Column(name = "city_name")
+    @Column(name = "name")
     private String cityName;
     @Column(name = "description")
     private String description;
@@ -26,7 +26,7 @@ public class Location {
     private String tag;
     @OneToMany(mappedBy = "location", cascade = {CascadeType.ALL,CascadeType.REMOVE}, orphanRemoval = true)
     private List<LocationImages> locationImages;
-    @Column(name = "url")
+    @Column(name = "web_url")
     private String url;
 
     public Location(Long id) {

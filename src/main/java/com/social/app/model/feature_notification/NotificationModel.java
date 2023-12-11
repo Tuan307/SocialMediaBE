@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "notification_item")
+@Table(name = "notification")
 public class NotificationModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,16 +24,16 @@ public class NotificationModel {
     private Boolean isInvitation;
     @Column(name = "is_request")
     private Boolean isRequest;
-    @Column(name = "text")
+    @Column(name = "content")
     private String text;
-    @Column(name = "notification_post_id")
+    @Column(name = "post_id")
     private String notificationPostId;
-    @Column(name = "notification_timestamp")
+    @Column(name = "created_at")
     private String notificationTimeStamp;
-    @Column(name = "notification_owner_id")
+    @Column(name = "owner_id")
     private String notificationOwnerId;
     @ManyToOne
-    @JoinColumn(name = "notification_user_id")
+    @JoinColumn(name = "user_id")
     private User notificationUserId;
     @ManyToOne
     @JoinColumn(name = "group_id")

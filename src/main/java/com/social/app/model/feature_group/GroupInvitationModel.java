@@ -26,7 +26,6 @@ public class GroupInvitationModel {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User requestUserId;
-
     @ManyToOne
     @JoinColumn(name = "from_user_id")
     private User fromInvitedUserId;

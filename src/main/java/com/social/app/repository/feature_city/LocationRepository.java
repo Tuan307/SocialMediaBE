@@ -1,6 +1,6 @@
 package com.social.app.repository.feature_city;
 
-import com.social.app.model.feature_city.Location;
+import com.social.app.model.feature_location.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

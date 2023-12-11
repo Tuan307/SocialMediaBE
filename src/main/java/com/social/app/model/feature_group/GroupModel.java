@@ -14,31 +14,27 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.List;
 
 @Entity
-@Table(name = "group_model")
+@Table(name = "travel_group")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupModel {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "group_name")
+    @Column(name = "name")
     private String groupName;
-
-    @Column(name = "group_description")
+    @Column(name = "description")
     private String groupDescription;
-    @Column(name = "group_image")
+    @Column(name = "image_url")
     private String groupImageUrl;
-    @Column(name = "group_created_at")
+    @Column(name = "created_at")
     private String groupCreatedAt;
-
     @ManyToOne
     @JoinColumn(name = "group_owner_id")
     private User groupOwner;
-    @Column(name = "group_privacy")
+    @Column(name = "privacy")
     private String groupPrivacy;
 
     @OneToMany(mappedBy = "groupModelId", cascade = CascadeType.ALL, orphanRemoval = true)

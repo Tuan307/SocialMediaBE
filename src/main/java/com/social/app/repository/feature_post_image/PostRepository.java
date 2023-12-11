@@ -1,6 +1,6 @@
 package com.social.app.repository.feature_post_image;
 
-import com.social.app.model.feature_post_image.PostItem;
+import com.social.app.model.feature_post.PostItem;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

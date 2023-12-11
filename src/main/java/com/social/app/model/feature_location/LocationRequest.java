@@ -1,4 +1,4 @@
-package com.social.app.model.feature_city;
+package com.social.app.model.feature_location;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CityRequest {
+public class LocationRequest {
     private Long cityId;
     private String cityName;
     private String description;

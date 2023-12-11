@@ -1,4 +1,4 @@
-package com.social.app.model.feature_post_image;
+package com.social.app.model.feature_post;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.social.app.model.feature_user.User;
@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "post_image")
+@Table(name = "post")
 public class PostItem {
     @Id
     @Column(name = "post_id")
@@ -23,18 +23,16 @@ public class PostItem {
     private String description;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostImages> imagesList;
-
     @ManyToOne
-    @JoinColumn(name = "post_user_id")
+    @JoinColumn(name = "user_id")
     private User postUserId;
-
-    @Column(name = "check_in_timestamp")
+    @Column(name = "created_at")
     private String checkInTimestamp;
-    @Column(name = "check_in_address")
+    @Column(name = "check_in_location")
     private String checkInAddress;
-    @Column(name = "check_in_latitude")
+    @Column(name = "latitude")
     private Double checkInLatitude;
-    @Column(name = "check_in_longitude")
+    @Column(name = "longitude")
     private Double checkInLongitude;
     @Column(name = "type")
     private String type;

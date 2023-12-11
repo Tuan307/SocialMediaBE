@@ -1,8 +1,8 @@
 package com.social.app.controller.feature_post_image;
 
 import com.social.app.model.common.ResponseResult;
-import com.social.app.model.feature_post_image.PostRequest;
-import com.social.app.model.feature_post_image.SavedPostRequest;
+import com.social.app.model.feature_post.PostRequest;
+import com.social.app.model.feature_post.SavedPostRequest;
 import com.social.app.service.feature_post_image.PostImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

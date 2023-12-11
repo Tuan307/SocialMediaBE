@@ -17,15 +17,12 @@ public class GroupMemberModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "group_id")
     private GroupModel groupModelId;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User groupMemberUserId;
-
-    @Column(name = "user_type")
+    @Column(name = "type")
     private String type;
 }

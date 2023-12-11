@@ -1,7 +1,7 @@
 package com.social.app.controller.feature_user;
 
 import com.social.app.model.common.ResponseResult;
-import com.social.app.model.feature_user.UpdateUserRequest;
+import com.social.app.model.feature_user.request.UpdateUserRequest;
 import com.social.app.model.feature_user.User;
 import com.social.app.model.feature_user.request.FollowUserRequest;
 import com.social.app.model.feature_user.request.UpdateBlockRequest;

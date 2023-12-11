@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "group_post_item")
+@Table(name = "group_post")
 public class GroupPostItem {
     @Id
     @Column(name = "group_post_id")
@@ -22,23 +22,23 @@ public class GroupPostItem {
     private String description;
 
     @OneToMany(mappedBy = "groupPostItem", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<GroupPostContentItem> groupPostContentItemList;
+    private List<GroupPostImages> groupPostImagesList;
 
     @ManyToOne
-    @JoinColumn(name = "group_post_user_id")
+    @JoinColumn(name = "user_id")
     private User groupPostUserId;
 
     @ManyToOne
-    @JoinColumn(name = "group_post_group_id")
+    @JoinColumn(name = "group_id")
     private GroupModel groupPostModelId;
 
     @Column(name = "created_at")
     private String createdAt;
-    @Column(name = "check_in_address")
+    @Column(name = "check_in_location")
     private String checkInAddress;
-    @Column(name = "check_in_latitude")
+    @Column(name = "latitude")
     private Double checkInLatitude;
-    @Column(name = "check_in_longitude")
+    @Column(name = "longitude")
     private Double checkInLongitude;
     @Column(name = "type")
     private String type;

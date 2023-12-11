@@ -230,11 +230,11 @@ public class GroupService {
         post.setCreatedAt(request.getCreatedAt());
         post.setCheckInLongitude(request.getCheckInLongitude());
         post.setVideoUrl(request.getVideoUrl());
-        post.setGroupPostContentItemList(new ArrayList<>());
+        post.setGroupPostImagesList(new ArrayList<>());
         if (request.getType().equals("image")) {
             for (int i = 0; i < request.getImagesList().size(); i++) {
-                GroupPostContentItem contentItem = new GroupPostContentItem(null, request.getImagesList().get(i), new GroupPostItem(request.getId()));
-                post.getGroupPostContentItemList().add(contentItem);
+                GroupPostImages contentItem = new GroupPostImages(null, request.getImagesList().get(i), new GroupPostItem(request.getId()));
+                post.getGroupPostImagesList().add(contentItem);
             }
         }
         GroupPostItem result = groupPostItemRepository.save(post);
@@ -254,9 +254,9 @@ public class GroupService {
     public ResponseResult deletePost(String postId, Long groupId) {
         Optional<GroupPostItem> post = groupPostItemRepository.findPostByGroupIdAndPostId(groupId, postId);
         if (post.isPresent()) {
-            List<GroupPostContentItem> posts = post.get().getGroupPostContentItemList();
-            for (Iterator<GroupPostContentItem> iterator = posts.iterator(); iterator.hasNext(); ) {
-                GroupPostContentItem post1 = iterator.next();
+            List<GroupPostImages> posts = post.get().getGroupPostImagesList();
+            for (Iterator<GroupPostImages> iterator = posts.iterator(); iterator.hasNext(); ) {
+                GroupPostImages post1 = iterator.next();
                 post1.setGroupPostItem(null);
                 iterator.remove(); //remove the child first
             }
