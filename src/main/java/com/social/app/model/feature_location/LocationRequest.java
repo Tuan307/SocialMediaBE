@@ -16,5 +16,6 @@ public class LocationRequest {
     private String cityName;
     private String description;
     private String tag;
+    private String webUrl;
     private List<String> cityImages;
 }
