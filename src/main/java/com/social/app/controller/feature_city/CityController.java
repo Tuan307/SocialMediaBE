@@ -31,4 +31,9 @@ public class CityController {
     public ResponseResult getAllCity() {
         return locationService.getAllCity();
     }
+
+    @GetMapping("/get")
+    public ResponseResult getLocation(@RequestParam("id") Long id) {
+        return locationService.getLocation(id);
+    }
 }

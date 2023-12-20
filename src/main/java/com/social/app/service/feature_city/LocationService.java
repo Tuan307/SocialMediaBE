@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class LocationService {
@@ -29,6 +30,11 @@ public class LocationService {
 
     public ResponseResult searchForCity(String keyword) {
         return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), locationRepository.searchCityByName(keyword));
+    }
+
+    public ResponseResult getLocation(Long id) {
+        Optional<Location> location = locationRepository.findById(String.valueOf(id));
+        return location.map(value -> new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), value)).orElseGet(() -> new ResponseResult(new Status(200, CommonUtils.LOCATION_EXIST_ERROR_RESPONSE), null));
     }
 
     public ResponseResult deleteCity(Long id) {
