@@ -28,6 +28,28 @@ public class LocationService {
         return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), result);
     }
 
+    public ResponseResult updateLocation(LocationRequest request) {
+        Optional<Location> location = locationRepository.findById(String.valueOf(request.getCityId()));
+        if (location.isPresent()) {
+            Location model = location.get();
+            if (!request.getTag().equals("")) {
+                model.setTag(request.getTag());
+            }
+            if (!request.getDescription().equals("")) {
+                model.setDescription(request.getDescription());
+            }
+            if (!request.getCityName().equals("")) {
+                model.setCityName(request.getCityName());
+            }
+            if (!request.getWebUrl().equals("")) {
+                model.setUrl(request.getWebUrl());
+            }
+            return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), locationRepository.save(model));
+        } else {
+            return new ResponseResult(new Status(200, CommonUtils.LOCATION_EXIST_ERROR_RESPONSE), null);
+        }
+    }
+
     public ResponseResult searchForCity(String keyword) {
         return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), locationRepository.searchCityByName(keyword));
     }

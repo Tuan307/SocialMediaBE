@@ -17,6 +17,11 @@ public class CityController {
         return locationService.addCity(request);
     }
 
+    @PutMapping("/update")
+    public ResponseResult updateLocation(@RequestBody LocationRequest request) {
+        return locationService.updateLocation(request);
+    }
+
     @DeleteMapping("/delete")
     public ResponseResult addCity(@RequestParam("id") Long id) {
         return locationService.deleteCity(id);
