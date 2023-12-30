@@ -129,12 +129,14 @@ public class GroupService {
     public ResponseResult getAllGroupByOwner(String userId, int pageCount, int pageNumber) {
         return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findGroupByOwnerId(userId, PageRequest.of(pageNumber, pageCount)));
     }
+
     public ResponseResult searchGroup(String groupName, int pageCount, int pageNumber) {
         return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findGroupByName(groupName, PageRequest.of(pageNumber, pageCount)));
     }
 
     public ResponseResult getGroupById(Long groupId) {
-        return new ResponseResult(new Status(200, "Successfully"), groupModelRepository.findById(groupId).get());
+        Optional<GroupModel> groupModel = groupModelRepository.findById(groupId);
+        return groupModel.map(model -> new ResponseResult(new Status(200, SUCCESSFULLY_RESPONSE), model)).orElseGet(() -> new ResponseResult(new Status(200, GROUP_EXIST_ERROR_RESPONSE), null));
     }
 
     public ResponseResult getAllGroup(String userId, int pageCount, int page) {

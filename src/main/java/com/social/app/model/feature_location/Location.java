@@ -15,7 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "location")
 public class Location {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     Long cityId;
     @Column(name = "name")

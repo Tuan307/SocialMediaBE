@@ -16,6 +16,6 @@ public interface UserTourRepository extends JpaRepository<UserInterestProfile, L
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM user_tour_interest WHERE user_id = ?1", nativeQuery = true)
+    @Query(value = "DELETE FROM user_interest WHERE user_id = ?1", nativeQuery = true)
     void deleteInterestByUserId(String userId);
 }

@@ -25,6 +25,6 @@ public interface GroupPostItemRepository extends JpaRepository<GroupPostItem, St
 
     @Modifying
     @Transactional
-    @Query(value = "delete from group_post_item p where p.group_post_user_id =:userID",nativeQuery = true)
+    @Query(value = "delete from group_post p where p.user_id =:userID",nativeQuery = true)
     void deleteAllByUserId(String userID);
 }

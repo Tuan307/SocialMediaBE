@@ -20,6 +20,6 @@ public interface GroupModelRepository extends JpaRepository<GroupModel, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "delete from group_model p where p.group_owner_id =:userID", nativeQuery = true)
+    @Query(value = "delete from travel_group p where p.group_owner_id =:userID", nativeQuery = true)
     void deleteAllByUserId(String userID);
 }

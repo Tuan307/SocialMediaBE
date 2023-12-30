@@ -20,6 +20,6 @@ public interface PostRepository extends JpaRepository<PostItem, String> {
     Optional<PostItem> findPostById(String postId);
     @Modifying
     @Transactional
-    @Query(value = "delete from post_image p where p.post_user_id =:userID",nativeQuery = true)
+    @Query(value = "delete from post p where p.user_id =:userID",nativeQuery = true)
     void deleteAllByUserId(String userID);
 }

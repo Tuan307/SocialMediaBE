@@ -19,9 +19,9 @@ public class LocationService {
     private LocationRepository locationRepository;
 
     public ResponseResult addCity(LocationRequest request) {
-        Location location = new Location(request.getCityId(), request.getCityName(), request.getDescription(), request.getTag(), new ArrayList<>(), request.getWebUrl());
+        Location location = new Location(0L, request.getCityName(), request.getDescription(), request.getTag(), new ArrayList<>(), request.getWebUrl());
         for (int i = 0; i < request.getCityImages().size(); i++) {
-            LocationImages locationImages = new LocationImages(0L, request.getCityImages().get(i), new Location(request.getCityId()));
+            LocationImages locationImages = new LocationImages(0L, request.getCityImages().get(i), location);
             location.getLocationImages().add(locationImages);
         }
         Location result = locationRepository.save(location);

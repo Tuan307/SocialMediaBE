@@ -21,6 +21,6 @@ public interface NotificationRepository extends JpaRepository<NotificationModel,
 
     @Modifying
     @Transactional
-    @Query(value = "delete from notification_item n where n.notification_user_id =:userID",nativeQuery = true)
+    @Query(value = "delete from notification n where n.user_id =:userID",nativeQuery = true)
     void deleteAllByNotificationUserId(String userID);
 }
