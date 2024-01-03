@@ -8,6 +8,8 @@ import com.social.app.model.feature_location.LocationImages;
 import com.social.app.model.feature_location.LocationRequest;
 import com.social.app.repository.feature_city.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,5 +68,9 @@ public class LocationService {
 
     public ResponseResult getAllCity() {
         return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), locationRepository.findAll());
+    }
+
+    public ResponseResult getAllCitySorted() {
+        return new ResponseResult(new Status(200, CommonUtils.SUCCESSFULLY_RESPONSE), locationRepository.findAll(PageRequest.of(0,100).withSort(Sort.by("cityName").ascending())));
     }
 }

@@ -37,6 +37,11 @@ public class CityController {
         return locationService.getAllCity();
     }
 
+    @GetMapping("/all/sorted")
+    public ResponseResult getAllCitySorted() {
+        return locationService.getAllCitySorted();
+    }
+
     @GetMapping("/get")
     public ResponseResult getLocation(@RequestParam("id") Long id) {
         return locationService.getLocation(id);
