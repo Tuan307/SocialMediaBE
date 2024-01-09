@@ -18,8 +18,8 @@ public interface GroupInvitationRepository extends JpaRepository<GroupInvitation
     @Query(value = "SELECT g FROM GroupInvitationModel g WHERE g.requestUserId.userId = ?1 AND g.groupId.id = ?2")
     Optional<GroupInvitationModel> findInvitationByUserIdAndGroupId(String userId, Long groupId);
 
-    @Query(value = "SELECT g FROM GroupInvitationModel g WHERE g.fromInvitedUserId.userId = ?1 AND g.groupId.id = ?2")
-    Optional<GroupInvitationModel> findInvitationByFromUserIdAndGroupId(String userId, Long groupId);
+    @Query(value = "SELECT g FROM GroupInvitationModel g WHERE g.fromInvitedUserId.userId = ?1 AND g.groupId.id = ?2 AND g.type = ?3")
+    Optional<GroupInvitationModel> findInvitationByFromUserIdAndGroupId(String userId, Long groupId,String type);
 
     @Query(value = "SELECT g FROM GroupInvitationModel g WHERE g.groupId.id = ?1")
     List<GroupInvitationModel> findInvitationByGroupId(Long groupId);

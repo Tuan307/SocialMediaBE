@@ -75,6 +75,10 @@ public class GroupController {
     public ResponseResult addMemberToGroup(@RequestBody AddGroupMemberRequest request) {
         return groupService.addUserToGroup(request);
     }
+    @PostMapping("/add/member/admin")
+    public ResponseResult addAdminUserToGroup(@RequestBody AddGroupMemberRequest request) {
+        return groupService.addAdminUserToGroup(request);
+    }
 
     @DeleteMapping("/delete/invitation")
     public ResponseResult cancelInvitation(@RequestBody AddGroupMemberRequest request) {

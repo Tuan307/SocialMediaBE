@@ -47,7 +47,7 @@ public class GroupService {
         if (checkIfJoined.isPresent()) {
             return new ResponseResult(new Status(200, "Successfully"), 2);
         } else {
-            Optional<GroupInvitationModel> checkExist = groupInvitationRepository.findInvitationByFromUserIdAndGroupId(userId, groupId);
+            Optional<GroupInvitationModel> checkExist = groupInvitationRepository.findInvitationByFromUserIdAndGroupId(userId, groupId, "request");
             if (checkExist.isPresent()) {
                 return new ResponseResult(new Status(200, "Successfully"), 1);
             } else {
@@ -57,7 +57,7 @@ public class GroupService {
     }
 
     public ResponseResult removeGroupRequest(String userId, Long groupId) {
-        Optional<GroupInvitationModel> checkExist = groupInvitationRepository.findInvitationByFromUserIdAndGroupId(userId, groupId);
+        Optional<GroupInvitationModel> checkExist = groupInvitationRepository.findInvitationByFromUserIdAndGroupId(userId, groupId, "request");
         if (checkExist.isPresent()) {
             groupInvitationRepository.deleteById(checkExist.get().getId());
             return new ResponseResult(new Status(200, "Successfully"), true);
@@ -145,7 +145,7 @@ public class GroupService {
         System.out.println(getAllGroup.getContent().size());
         for (GroupModel i : getAllGroup.getContent()) {
             Optional<GroupMemberModel> user = groupMemberRepository.findGroupByUserIdAndGroupId(userId, i.getId());
-            Optional<GroupInvitationModel> requestUser = groupInvitationRepository.findInvitationByFromUserIdAndGroupId(userId, i.getId());
+            Optional<GroupInvitationModel> requestUser = groupInvitationRepository.findInvitationByFromUserIdAndGroupId(userId, i.getId(), "request");
             if (user.isEmpty() && requestUser.isEmpty()) {
                 resultList.add(i);
             }
@@ -213,6 +213,27 @@ public class GroupService {
                 model.setType("member");
                 Optional<GroupInvitationModel> checkInvitation = groupInvitationRepository.findInvitationByUserIdAndGroupId(addGroupMemberRequest.getUserId(), addGroupMemberRequest.getGroupId());
                 checkInvitation.ifPresent(groupInvitationModel -> groupInvitationRepository.deleteById(groupInvitationModel.getId()));
+                return new ResponseResult(new Status(200, "Successfully"), groupMemberRepository.save(model));
+            }
+        }
+    }
+
+    public ResponseResult addAdminUserToGroup(AddGroupMemberRequest addGroupMemberRequest) {
+        Optional<User> user = userRepository.findUserByUserId(addGroupMemberRequest.getUserId());
+        Optional<GroupModel> groupModel = groupModelRepository.findById(addGroupMemberRequest.getGroupId());
+        if (user.isEmpty()) {
+            return new ResponseResult(new Status(200, "Tài khoản của bạn không được tìm thấy trong csdl"), null);
+        } else if (groupModel.isEmpty()) {
+            return new ResponseResult(new Status(200, "Có vẻ như nhóm mà bạn đang muốn tham gia đã giải tán"), null);
+        } else {
+            Optional<GroupMemberModel> checkExist = groupMemberRepository.findGroupByUserIdAndGroupId(addGroupMemberRequest.getUserId(), addGroupMemberRequest.getGroupId());
+            if (checkExist.isPresent()) {
+                return new ResponseResult(new Status(200, "Có vẻ như tài khoản đã là thành viên của nhóm rồi"), null);
+            } else {
+                GroupMemberModel model = new GroupMemberModel();
+                model.setGroupModelId(groupModel.get());
+                model.setGroupMemberUserId(user.get());
+                model.setType("admin");
                 return new ResponseResult(new Status(200, "Successfully"), groupMemberRepository.save(model));
             }
         }
