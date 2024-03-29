@@ -13,10 +13,10 @@ public class PostImageController {
     @Autowired
     private PostImageService postImageService;
 
-    @PostMapping("")
-    public ResponseResult savePostImage(@RequestBody PostRequest postRequest) {
-        return postImageService.saveData(postRequest);
-    }
+//    @PostMapping("")
+//    public ResponseResult savePostImage(@RequestBody PostRequest postRequest) {
+//        return postImageService.saveData(postRequest);
+//    }
 
     @PostMapping("/saved")
     public ResponseResult saveSavedPost(@RequestBody SavedPostRequest postRequest) {
