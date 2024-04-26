@@ -8,6 +8,7 @@ import com.social.app.model.feature_group.GroupPostItem;
 import com.social.app.model.feature_notification.NotificationModel;
 import com.social.app.model.feature_post.PostItem;
 import com.social.app.model.feature_post.SavedPostItem;
+import com.social.app.model.feature_story.StoryFolder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -87,6 +88,10 @@ public class User {
     @OneToMany(mappedBy = "targetId", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<UserFollow> userFollowerList;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "storyUser")
+    @JsonIgnore
+    private List<StoryFolder> storyFolderList;
 
     public User(String userId, String userName, String fullName, String imageUrl, String bio, String email, Double latitude, Double longitude, List<PostItem> postItemList) {
         this.userId = userId;
